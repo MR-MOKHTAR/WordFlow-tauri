@@ -22,11 +22,12 @@ function NewFileProvider({ children }: { children: ReactNode }) {
         : `${fileName}.json`;
 
       const result = await createFile(fullName);
-      alert(result.err);
-      if (!result) return;
+      if (!result.success) {
+        alert(result.error ?? "خطا در ایجاد فایل");
+        return;
+      }
 
       openFileWithFetch(fullName);
-      // openFile(fullName, []);
       setFileName(fullName);
       createdNewCell();
       setOpenNewFileModal(false);

@@ -19,18 +19,16 @@ function createNewFile() {
     const userAppDataPath = await myAppDataPath();
     const filePath = await join(userAppDataPath, fileName);
 
-    const checkFile = await exists(filePath);
-
     try {
+      const checkFile = await exists(filePath);
       if (checkFile) {
         return { success: false, error: "فایلی با این نام وجود دارد!" };
-      } else {
-        await writeTextFile(filePath, JSON.stringify(emptyCell));
-        await exists(filePath);
-        return { success: true };
       }
+
+      await writeTextFile(filePath, JSON.stringify(emptyCell));
+      return { success: true, path: filePath };
     } catch (err: unknown) {
-      return { success: false, err };
+      return { success: false, error: String(err) };
     }
   };
   return createFileHandler;
