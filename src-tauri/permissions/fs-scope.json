@@ -1,0 +1,5 @@
+{
+  "identifier": "fs:scope",
+  "description": "Allow access to app data directory",
+  "allow": [{ "path": "$APPDATA/data/**" }]
+}

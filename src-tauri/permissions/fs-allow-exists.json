@@ -1,0 +1,5 @@
+{
+  "identifier": "fs:allow-exists",
+  "description": "Allow checking if files exist in app data directory",
+  "allow": [{ "path": "$APPDATA/data/**" }]
+}

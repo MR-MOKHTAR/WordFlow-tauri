@@ -1,0 +1,27 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Capability for the main window",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "opener:default",
+    "core:window:allow-minimize",
+    "core:window:allow-maximize",
+    "core:window:allow-close",
+    "core:window:allow-toggle-maximize",
+    "fs:default",
+    "fs:read-dirs",
+    "fs:read-all",
+    "fs:scope",
+    "fs:allow-exists",
+    "fs:allow-app-read",
+    "fs:allow-app-read-recursive",
+    "fs:allow-write-text-file",
+    "fs:allow-remove",
+    "global-shortcut:allow-is-registered",
+    "global-shortcut:allow-register",
+    "global-shortcut:allow-unregister-all",
+    "global-shortcut:allow-unregister"
+  ]
+}

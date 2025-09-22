@@ -1,0 +1,8 @@
+{
+  "welcome": "Welcome to my editor!",
+  "download": "Download",
+  "editor": {
+    "word_count": "Word Count",
+    "character_count": "Character Count"
+  }
+}
