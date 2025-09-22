@@ -1,4 +1,4 @@
-import { appDataDir, BaseDirectory, join } from "@tauri-apps/api/path";
+import { appDataDir, join } from "@tauri-apps/api/path";
 import { exists, mkdir } from "@tauri-apps/plugin-fs";
 
 export default async function myAppDataPath() {
@@ -6,11 +6,9 @@ export default async function myAppDataPath() {
 
   const myAppDataDir = await join(userDataPath, "data");
 
-  const dirExists = await exists(myAppDataDir, {
-    baseDir: BaseDirectory.AppData,
-  });
+  const dirExists = await exists(myAppDataDir);
   if (!dirExists) {
-    await mkdir("data", { baseDir: BaseDirectory.AppLocalData });
+    await mkdir(myAppDataDir);
   }
 
   return myAppDataDir;
