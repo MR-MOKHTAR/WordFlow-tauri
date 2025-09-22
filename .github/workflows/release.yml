@@ -6,6 +6,10 @@ on:
       - "v*" # فقط وقتی که تگ با v شروع شود (مثلا v0.1.5)
   workflow_dispatch: # برای اجرای دستی
 
+
+permissions:
+  contents: write
+
 jobs:
   build:
     strategy:
