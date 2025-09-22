@@ -11,5 +11,7 @@ export default async function myAppDataPath() {
     await mkdir(myAppDataDir);
   }
 
+  alert(myAppDataDir);
+
   return myAppDataDir;
 }

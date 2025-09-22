@@ -22,6 +22,7 @@ function NewFileProvider({ children }: { children: ReactNode }) {
         : `${fileName}.json`;
 
       const result = await createFile(fullName);
+      alert(result.err);
       if (!result) return;
 
       openFileWithFetch(fullName);

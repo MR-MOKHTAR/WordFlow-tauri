@@ -29,7 +29,7 @@ function createNewFile() {
         await exists(filePath);
         return { success: true };
       }
-    } catch (err) {
+    } catch (err: unknown) {
       return { success: false, err };
     }
   };
