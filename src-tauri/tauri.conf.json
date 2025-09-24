@@ -19,6 +19,11 @@
         "fullscreen": false,
         "decorations": false,
         "devtools": true
+      },
+      {
+        "label": "pdf_window",
+        "url": "blank.html",
+        "visible": false
       }
     ],
     "security": {

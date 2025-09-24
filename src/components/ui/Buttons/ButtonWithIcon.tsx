@@ -59,7 +59,7 @@ const ButtonWithIcon = memo(function ButtonWithIcon({
     <button
       onClick={onClick}
       className={clsx(
-        "flex items-center justify-center cursor-pointer",
+        "header-btn flex items-center justify-center cursor-pointer",
         "transition-all duration-200 ease-in-out",
         "active:scale-90", // افکت کلیک
         sizeMap[btnSize],

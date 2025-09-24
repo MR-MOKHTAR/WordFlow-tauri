@@ -93,7 +93,8 @@ export type NewFileContextType = {
 
 export type ToastData = {
   message: string;
-  type: "success" | "error";
+  type: "success" | "info" | "error";
+  duration?: number;
 };
 
 export type ToastContextType = {

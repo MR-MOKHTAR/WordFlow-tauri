@@ -1,4 +1,6 @@
-// Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
+// src/lib.rs
+mod pdf; // ← ماژول pdf رو اضافه کن
+
 #[tauri::command]
 fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
@@ -10,7 +12,10 @@ pub fn run() {
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![greet])
+        .invoke_handler(tauri::generate_handler![
+            greet,
+            pdf::export_to_pdf // * ثبت دستور جدید
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
