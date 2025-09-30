@@ -32,8 +32,17 @@ pub async fn export_to_pdf(
     // کمی صبر برای رندر شدن DOM
     sleep(Duration::from_millis(500));
 
-    // باز کردن دیالوگ پرینت مرورگر داخلی (کاربر خودش باید Save as PDF بزنه)
+    // --- برای ویندوز نیاز داریم پنجره رو موقتاً نشون بدیم ---
+    window.show().map_err(|e| e.to_string())?;
+    window.set_focus().map_err(|e| e.to_string())?;
+    sleep(Duration::from_millis(300));
+
+    // باز کردن دیالوگ پرینت مرورگر داخلی
     window.eval("window.print();").map_err(|e| e.to_string())?;
+
+    // بعد از پرینت دوباره مخفی‌ش کن (اختیاری)
+    // sleep(Duration::from_secs(2)); // اگر بخوای کاربر پرینت رو ببینه، اینو نگه دار
+    window.hide().map_err(|e| e.to_string())?;
 
     Ok("Print dialog opened".to_string())
 }
