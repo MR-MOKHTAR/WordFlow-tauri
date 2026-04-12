@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "tauri-app",
+  "productName": "wordflow",
   "version": "0.1.1",
   "identifier": "com.mokhtar.tauri-app",
   "build": {
