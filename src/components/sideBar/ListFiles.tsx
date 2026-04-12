@@ -55,7 +55,7 @@ export default function ListFiles() {
   );
 
   return (
-    <div className="pt-2">
+    <div className="pt-2 px-0.5">
       <ul className="space-y-0.5">
         {Object.keys(files).map((file) => (
           <FileItem

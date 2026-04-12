@@ -18,13 +18,19 @@ export default function useSaveFile({
 }: SaveFileOptions = {}) {
   const { files, updateFileMeta } = useFilesContext();
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  // useRef<Record<string, ReturnType<typeof setTimeout>>>({});
   const lastRunRef = useRef<number>(0);
+
+  // همیشه آخرین نسخه files و updateFileMeta را نگه می‌داریم
+  // تا saveAction از stale closure رنج نبرد
+  const filesRef = useRef(files);
+  const updateFileMetaRef = useRef(updateFileMeta);
+  filesRef.current = files;
+  updateFileMetaRef.current = updateFileMeta;
 
   const saveAction = useCallback(
     async (fileName: string) => {
-      const file = files[fileName];
+      // استفاده از ref به جای closure تا همیشه آخرین مقدار خوانده شود
+      const file = filesRef.current[fileName];
       if (!file) return;
 
       const content: CellType[] = file.cells || [];
@@ -35,12 +41,12 @@ export default function useSaveFile({
         if (!res?.success) throw new Error(res?.error || "ذخیره ناموفق بود");
 
         console.log(`[${mode}] فایل ${fileName} ذخیره شد`);
-        updateFileMeta(fileName, { isDirty: false }); // ✅ بعد از ذخیره موفق
+        updateFileMetaRef.current(fileName, { isDirty: false }); // ✅ بعد از ذخیره موفق
       } catch (err) {
         console.error("خطا در ذخیره فایل:", err);
       }
     },
-    [files, mode, updateFileMeta]
+    [mode] // دیگر به files و updateFileMeta وابسته نیست چون از ref می‌خواند
   );
 
   // این تابع رو برمی‌گردونیم که بشه روی هر فایل صدا زد

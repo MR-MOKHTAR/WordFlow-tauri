@@ -37,26 +37,26 @@ const FileItem = React.memo(
 
     return (
       <li
-        className={`flex-between group relative cursor-pointer py-0.5 px-1 rounded transition-colors duration-150 ${
+        className={`flex-between group relative cursor-pointer py-1.5 px-2 rounded-md transition-colors duration-150 ${
           isActive
             ? "bg-[#E2E8F0] dark:bg-hover-dark"
             : "hover:bg-[#e2e8f0] dark:hover:bg-[#44475A]/40"
         }`}
       >
         <span
-          className="flex items-center gap-x-2 flex-1 min-w-0 h-full transition-all"
+          className="flex items-center gap-x-2 flex-1 min-w-0 h-full transition-all overflow-hidden"
           onClick={onFileClick}
         >
           <GoFile
-            className={`transition-colors duration-150 ${
+            className={`shrink-0 transition-colors duration-150 ${
               isActive
                 ? "text-[#BD93F9]"
                 : "text-gray-500 group-hover:text-gray-700 dark:text-gray-400 dark:group-hover:text-gray-200"
             }`}
-            size={18}
+            size={16}
           />
           <span
-            className={`line-clamp-1 block w-full min-w-0 transition-colors duration-150 ${
+            className={`block w-full min-w-0 truncate text-sm transition-colors duration-150 ${
               isActive
                 ? "text-gray-900 dark:text-gray-100 font-medium"
                 : "text-gray-700 dark:text-gray-300"
@@ -66,9 +66,9 @@ const FileItem = React.memo(
           </span>
         </span>
 
-        <span className="relative flex items-center justify-center h-5 min-w-5">
+        <span className="relative flex items-center justify-center h-5 min-w-5 shrink-0">
           {isDirty && (
-            <span className="size-2 rounded-full bg-[#FFB86C] group-hover:hidden" />
+            <span className="dirty-dot group-hover:hidden" />
           )}
           <GoKebabHorizontal
             className="rotate-90 cursor-pointer shrink-0 hidden group-hover:inline-block transition-colors duration-150 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"

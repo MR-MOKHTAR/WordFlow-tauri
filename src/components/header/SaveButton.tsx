@@ -2,7 +2,7 @@ import { MdOutlineSaveAlt } from "react-icons/md";
 import useSaveFile from "../SaveFile/useSaveFile";
 import Tooltip from "../ui/Tooltip";
 import useFilesContext from "../contexts/FilesContext/useFilesContext";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import ButtonWithIcon from "../ui/Buttons/ButtonWithIcon";
 
 export default function SaveButton() {
@@ -15,6 +15,11 @@ export default function SaveButton() {
     [activeFile, saveFile]
   );
 
+  // همیشه آخرین نسخه handleClick را در ref نگه می‌داریم
+  // تا event listener روی Ctrl+S از stale closure رنج نبرد
+  const handleClickRef = useRef(handleClick);
+  handleClickRef.current = handleClick;
+
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
       if (
@@ -22,7 +27,8 @@ export default function SaveButton() {
         (event.key.toLowerCase() === "s" || event.key === "س")
       ) {
         event.preventDefault();
-        handleClick();
+        // از ref می‌خوانیم تا همیشه آخرین handleClick صدا زده شود
+        handleClickRef.current();
       }
     };
 
@@ -30,7 +36,7 @@ export default function SaveButton() {
     return () => {
       window.removeEventListener("keydown", handler);
     };
-  }, [handleClick]);
+  }, []); // ✅ فقط یکبار listener ثبت می‌شود و دیگر re-register نمی‌کند
 
   return (
     <Tooltip content={`Save (Ctrl+S)`}>
