@@ -35,12 +35,12 @@ function CopyButton({ cellId }: propType) {
   return (
     <Tooltip content="Copy (Ctrl+C)" position="bottom-end" delay={700}>
       <ButtonWithIcon
-        btnSize="sm"
+        btnSize="md"
         icon={
           !isCoped ? (
-            <MdOutlineContentCopy size={18} />
+            <MdOutlineContentCopy size={20} />
           ) : (
-            <MdOutlineCheck size={18} />
+            <MdOutlineCheck size={20} />
           )
         }
         onClick={copyContextHandler}

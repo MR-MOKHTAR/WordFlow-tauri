@@ -9,8 +9,8 @@ function Undo({ editor }: { editor: Editor | null }) {
   return (
     <Tooltip content="Undo (Ctrl+Z)" position="bottom-end" delay={700}>
       <ButtonWithIcon
-        btnSize="sm"
-        icon={<MdOutlineUndo size={18} />}
+        btnSize="md"
+        icon={<MdOutlineUndo size={20} />}
         shape="md"
         onClick={undoHandler}
       />

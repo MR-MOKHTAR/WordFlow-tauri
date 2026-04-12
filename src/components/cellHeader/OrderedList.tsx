@@ -12,7 +12,7 @@ function OrderedList({ editor }: { editor: Editor | null }) {
   return (
     <Tooltip content="Ordered List" position="bottom-end" delay={700}>
       <ButtonWithIcon
-        btnSize="sm"
+        btnSize="md"
         icon={<MdOutlineFormatListNumbered size={20} />}
         onClick={orderedListHandler}
         shape="md"

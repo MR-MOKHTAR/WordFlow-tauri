@@ -12,8 +12,8 @@ function Bold({ editor }: { editor: Editor | null }) {
   return (
     <Tooltip content="Bold" position="bottom-end" delay={700}>
       <ButtonWithIcon
-        btnSize="sm"
-        icon={<HiOutlineBold size={18} />}
+        btnSize="md"
+        icon={<HiOutlineBold size={20} />}
         onClick={boldHandler}
         shape="md"
       />

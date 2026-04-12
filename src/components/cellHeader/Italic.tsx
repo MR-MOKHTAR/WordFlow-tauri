@@ -12,8 +12,8 @@ function Italic({ editor }: { editor: Editor | null }) {
   return (
     <Tooltip content="Italic" position="bottom-end" delay={700}>
       <ButtonWithIcon
-        btnSize="sm"
-        icon={<HiOutlineItalic size={18} />}
+        btnSize="md"
+        icon={<HiOutlineItalic size={20} />}
         onClick={italicHandler}
         shape="md"
       />

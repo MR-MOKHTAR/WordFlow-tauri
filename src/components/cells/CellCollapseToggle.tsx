@@ -10,13 +10,13 @@ type propType = {
 function CellCollapseToggle({ isOpen, setIsOpen }: propType) {
   const clickHandler = useCallback(
     () => setIsOpen((prev) => !prev),
-    [setIsOpen]
+    [setIsOpen],
   );
   return (
     <div className="absolute right-1.5 lg:right-2.5 top-0.5 z-10">
       <ButtonWithIcon
-        icon={isOpen ? <FiMinus size={16} /> : <FiPlus size={16} />}
-        btnSize="sm"
+        icon={isOpen ? <FiMinus size={18} /> : <FiPlus size={18} />}
+        btnSize="md"
         shape="md"
         onClick={clickHandler}
       />

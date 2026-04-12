@@ -12,7 +12,7 @@ function BulletList({ editor }: { editor: Editor | null }) {
   return (
     <Tooltip content="Bullet List" position="bottom-end" delay={700}>
       <ButtonWithIcon
-        btnSize="sm"
+        btnSize="md"
         icon={<MdOutlineFormatListBulleted size={20} />}
         onClick={bulletListHandler}
         shape="md"

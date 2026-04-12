@@ -49,10 +49,10 @@ function Heading({ editor }: { editor: Editor | null }) {
     <div>
       <Tooltip content="Heading" position="bottom-end" delay={700}>
         <ButtonWithIcon
-          icon={<RiHeading size={18} />}
+          icon={<RiHeading size={20} />}
           onClick={handleClick}
           shape="md"
-          btnSize="sm"
+          btnSize="md"
           className="mt-1"
         />
       </Tooltip>

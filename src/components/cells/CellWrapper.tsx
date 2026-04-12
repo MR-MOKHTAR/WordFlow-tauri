@@ -173,9 +173,9 @@ export default function CellWrapper({
   }, [cellId, isOpen]);
 
   return (
-    <div className="relative mx-auto max-w-210 mb-4 transition-all group shadow-primary dark:shadow-sm dark:shadow-black/10 bg-cell-light dark:bg-cell-dark rounded-lg duration-200 overflow-hidden">
-      <CellCollapseToggle setIsOpen={setIsOpen} isOpen={isOpen} />
+    <div className="relative w-full mx-auto max-w-3xl mb-4 transition-all group shadow-primary dark:shadow-sm dark:shadow-black/10 bg-cell-light dark:bg-cell-dark rounded-lg duration-200 overflow-hidden">
       <CellHeader editor={editor} cellId={cellId} />
+      <CellCollapseToggle setIsOpen={setIsOpen} isOpen={isOpen} />
       {isOpen && (
         <TiptapCellEditor key={cellId} content={content} editor={editor} />
       )}

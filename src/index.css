@@ -111,7 +111,7 @@
   }
 
   .cell-header {
-    @apply sticky top-0 flex items-center justify-end h-8 px-1.5 lg:px-2.5 gap-x-0.75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-md shadow-cell-header shadow-stone-300/75 dark:shadow-stone-700/75;
+    @apply sticky top-0 flex items-center justify-end h-9 pl-1.5 pr-10 lg:pl-2.5 lg:pr-12 gap-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-md shadow-cell-header shadow-stone-300/75 dark:shadow-stone-700/75;
   }
 
   .order-list {

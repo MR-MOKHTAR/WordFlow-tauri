@@ -56,12 +56,12 @@ export default function TipTap() {
   const handleContentUpdate = useCallback(
     (cellId: string, newContent: string) => {
       setCells((prev) =>
-        prev.map((c) => (c.id === cellId ? { ...c, content: newContent } : c))
+        prev.map((c) => (c.id === cellId ? { ...c, content: newContent } : c)),
       );
       if (hasLoadedOnceRef.current) setIsDirty(true);
       else setHasLoadedOnce(true);
     },
-    [setCells, setIsDirty, setHasLoadedOnce]
+    [setCells, setIsDirty, setHasLoadedOnce],
   );
 
   const renderItem = useCallback(
@@ -80,7 +80,7 @@ export default function TipTap() {
       return (
         <div
           key={cell.id}
-          className="mt-1.5 transition-all duration-300 ease-in-out transform animate-fade-in"
+          className="mt-1.5 px-4 md:px-8 transition-all duration-300 ease-in-out transform animate-fade-in"
         >
           <MemoizedCellWrapper
             initialContent={cell.content}
@@ -91,7 +91,7 @@ export default function TipTap() {
         </div>
       );
     },
-    [cells, handleContentUpdate]
+    [cells, handleContentUpdate],
   );
 
   // Footer Styel
@@ -99,14 +99,14 @@ export default function TipTap() {
     () => ({
       minHeight: Math.max(viewportHeight - 110, 0),
     }),
-    [viewportHeight]
+    [viewportHeight],
   );
 
   // * Footer
 
   const Footer = useCallback(
     () => <div style={footerStyle} className="w-full shrink-0" />,
-    [footerStyle]
+    [footerStyle],
   );
 
   // ---------------------------

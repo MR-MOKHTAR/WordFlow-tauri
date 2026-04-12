@@ -1,9 +1,6 @@
 import { EditorContent, type Editor } from "@tiptap/react";
-import { CSSProperties, memo, useEffect, useMemo } from "react";
+import { memo, useEffect, useMemo } from "react";
 import useFont from "../contexts/FontModal/useFont";
-import SimpleBar from "simplebar-react";
-import "simplebar-react/dist/simplebar.min.css";
-import { useViewportHeight } from "../Hooks/useViewportHeight";
 
 type TiptapCellEditorProps = {
   content: string;
@@ -12,7 +9,6 @@ type TiptapCellEditorProps = {
 
 function TiptapCellEditor({ content, editor }: TiptapCellEditorProps) {
   const { fontSize, fontFamily } = useFont();
-  const viewportHeight = useViewportHeight();
 
   // فقط وقتی content واقعی تغییر کند، editor آپدیت می‌شود
   useEffect(() => {
@@ -31,20 +27,13 @@ function TiptapCellEditor({ content, editor }: TiptapCellEditorProps) {
     [fontSize, fontFamily]
   );
 
-  const simpleBarStyle: CSSProperties = useMemo(
-    () => ({ maxHeight: viewportHeight - 90 }),
-    [viewportHeight]
-  );
-
   return (
     <div className="flex flex-col h-full">
-      <SimpleBar className="flex-1 overflow-y-auto" style={simpleBarStyle}>
-        <EditorContent
-          editor={editor}
-          className="py-4 px-5 min-h-[35px] text-justify tracking-normal whitespace-pre-wrap caret-cyan-700 text-CellHeader-light dark:text-CellHeader-dark"
-          style={editorStyle}
-        />
-      </SimpleBar>
+      <EditorContent
+        editor={editor}
+        className="py-4 px-5 min-h-[35px] text-justify tracking-normal whitespace-pre-wrap caret-cyan-700 text-CellHeader-light dark:text-CellHeader-dark"
+        style={editorStyle}
+      />
     </div>
   );
 }
