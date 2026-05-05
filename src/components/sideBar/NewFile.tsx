@@ -8,14 +8,14 @@ export default function AddNewFile() {
   const { setOpenNewFileModal } = useNewFile();
   const handleOpenModal = useCallback(
     () => setOpenNewFileModal(true),
-    [setOpenNewFileModal]
+    [setOpenNewFileModal],
   );
 
   return (
     <Tooltip content="New File" position="left">
       <ButtonWithIcon
-        btnSize="lg"
-        icon={<AiOutlineFileAdd size={20} />}
+        btnSize="md"
+        icon={<AiOutlineFileAdd size={18} />}
         onClick={handleOpenModal}
         shape="md"
       />

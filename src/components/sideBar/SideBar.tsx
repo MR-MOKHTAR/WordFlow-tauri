@@ -11,14 +11,10 @@ function SideBar() {
     fetchFiles();
   }, []);
 
-  useEffect(() => {
-    console.log("SideBar");
-  });
-
   return (
     <div
       className={`sidebar-container transition-all duration-300 ease-in-out ${
-        isOpenSideBar ? "w-56" : "w-12 items-center"
+        isOpenSideBar ? "w-64" : "w-12 items-center"
       }`}
     >
       <div className="flex-between py-1 border-b border-gray-300 dark:border-b-gray-800">

@@ -40,7 +40,7 @@ function Heading({ editor }: { editor: Editor | null }) {
       handleClose();
     },
 
-    [editor]
+    [editor],
   );
 
   if (!editor) return null;
@@ -49,10 +49,10 @@ function Heading({ editor }: { editor: Editor | null }) {
     <div>
       <Tooltip content="Heading" position="bottom-end" delay={700}>
         <ButtonWithIcon
-          icon={<RiHeading size={20} />}
+          icon={<RiHeading size={16} />}
           onClick={handleClick}
           shape="md"
-          btnSize="md"
+          btnSize="sm"
           className="mt-1"
         />
       </Tooltip>

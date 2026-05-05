@@ -7,13 +7,13 @@ import ButtonWithIcon from "../ui/Buttons/ButtonWithIcon";
 function Bold({ editor }: { editor: Editor | null }) {
   const boldHandler = useCallback(
     () => editor?.commands.toggleBold(),
-    [editor]
+    [editor],
   );
   return (
     <Tooltip content="Bold" position="bottom-end" delay={700}>
       <ButtonWithIcon
-        btnSize="md"
-        icon={<HiOutlineBold size={20} />}
+        btnSize="sm"
+        icon={<HiOutlineBold size={16} />}
         onClick={boldHandler}
         shape="md"
       />

@@ -12,7 +12,7 @@ export default function SaveButton() {
 
   const handleClick = useCallback(
     () => activeFile && saveFile(activeFile),
-    [activeFile, saveFile]
+    [activeFile, saveFile],
   );
 
   // همیشه آخرین نسخه handleClick را در ref نگه می‌داریم
@@ -41,10 +41,10 @@ export default function SaveButton() {
   return (
     <Tooltip content={`Save (Ctrl+S)`}>
       <ButtonWithIcon
-        btnSize="md"
+        btnSize="sm"
         onClick={handleClick}
         shape="md"
-        icon={<MdOutlineSaveAlt size={18} />}
+        icon={<MdOutlineSaveAlt size={16} />}
       />
     </Tooltip>
   );

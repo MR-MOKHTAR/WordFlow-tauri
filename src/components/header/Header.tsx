@@ -10,7 +10,7 @@ export default function Header() {
     <div className="header flex-between fixed w-full h-9 px-2.5 shadow-sm z-20 bg-sidebar-light dark:bg-sidebar-dark backdrop-blur-md text-gray-800">
       <HeaderRight />
 
-      <div className="flex items-center gap-x-1">
+      <div className="flex items-center gap-x-2">
         <ThemeBtn />
         <FontSetting />
         <CreatePDF />

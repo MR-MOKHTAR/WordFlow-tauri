@@ -21,24 +21,24 @@ function HeaderRight() {
   }, []);
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-1.5">
       <ButtonWithIcon
-        btnSize="md"
+        btnSize="sm"
         shape="md"
         onClick={handleClose}
-        icon={<IoCloseOutline size={18} />}
+        icon={<IoCloseOutline size={16} />}
       />
       <ButtonWithIcon
-        btnSize="md"
+        btnSize="sm"
         shape="md"
         onClick={handleMaximize}
-        icon={<LuMaximize size={18} />}
+        icon={<LuMaximize size={16} />}
       />
       <ButtonWithIcon
-        btnSize="md"
+        btnSize="sm"
         shape="md"
         onClick={handleMinimize}
-        icon={<HiMinus size={18} />}
+        icon={<HiMinus size={16} />}
       />
     </div>
   );

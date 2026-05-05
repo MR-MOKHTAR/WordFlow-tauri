@@ -12,8 +12,8 @@ function Redo({ editor }: RedoProp) {
   return (
     <Tooltip content="Redo (Ctrl+Y)" position="bottom-end" delay={700}>
       <ButtonWithIcon
-        btnSize="md"
-        icon={<MdOutlineRedo size={20} />}
+        btnSize="sm"
+        icon={<MdOutlineRedo size={16} />}
         shape="md"
         onClick={redoHandler}
       />

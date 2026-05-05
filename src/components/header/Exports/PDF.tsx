@@ -53,10 +53,10 @@ export default function CreatePDF() {
   return (
     <Tooltip content="Export PDF">
       <ButtonWithIcon
-        btnSize="md"
+        btnSize="sm"
         onClick={exportHandler}
         shape="md"
-        icon={<FaRegFilePdf size={18} />}
+        icon={<FaRegFilePdf size={16} />}
       />
     </Tooltip>
   );

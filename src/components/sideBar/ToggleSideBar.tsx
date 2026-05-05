@@ -14,9 +14,9 @@ function ToggleSideBar({ setIsOpenSideBar }: PropType) {
 
   return (
     <ButtonWithIcon
-      btnSize="lg"
+      btnSize="md"
       onClick={showSideBarHandler}
-      icon={<BsReverseLayoutSidebarReverse size={20} />}
+      icon={<BsReverseLayoutSidebarReverse size={18} />}
       shape="md"
     />
   );

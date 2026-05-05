@@ -13,10 +13,10 @@ export default function FontSetting() {
   return (
     <Tooltip content="Font Settings" position="bottom" delay={200}>
       <ButtonWithIcon
-        btnSize="md"
+        btnSize="sm"
         onClick={handleClick}
         shape="md"
-        icon={<AiOutlineFontSize size={18} />}
+        icon={<AiOutlineFontSize size={16} />}
       />
     </Tooltip>
   );

@@ -7,13 +7,13 @@ import ButtonWithIcon from "../ui/Buttons/ButtonWithIcon";
 function BulletList({ editor }: { editor: Editor | null }) {
   const bulletListHandler = useCallback(
     () => editor?.chain().focus().toggleBulletList().run(),
-    [editor]
+    [editor],
   );
   return (
     <Tooltip content="Bullet List" position="bottom-end" delay={700}>
       <ButtonWithIcon
-        btnSize="md"
-        icon={<MdOutlineFormatListBulleted size={20} />}
+        btnSize="sm"
+        icon={<MdOutlineFormatListBulleted size={16} />}
         onClick={bulletListHandler}
         shape="md"
       />

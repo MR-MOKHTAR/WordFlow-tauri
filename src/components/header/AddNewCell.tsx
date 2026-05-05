@@ -33,10 +33,10 @@ function AddNewCell() {
   return (
     <Tooltip content="New Note (Ctrl+N)" position="bottom">
       <ButtonWithIcon
-        btnSize="md"
+        btnSize="sm"
         onClick={handleClick}
         shape="md"
-        icon={<FaPlus size={18} />}
+        icon={<FaPlus size={16} />}
       />
     </Tooltip>
   );

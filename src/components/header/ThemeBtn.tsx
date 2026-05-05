@@ -8,9 +8,9 @@ export default function ThemeBtn() {
   return (
     <ButtonWithIcon
       onClick={toggleTheme}
-      btnSize="md"
+      btnSize="sm"
       shape="md"
-      icon={isDark ? <IoMoonOutline size={18} /> : <IoSunnySharp size={18} />}
+      icon={isDark ? <IoMoonOutline size={16} /> : <IoSunnySharp size={16} />}
     />
   );
 }

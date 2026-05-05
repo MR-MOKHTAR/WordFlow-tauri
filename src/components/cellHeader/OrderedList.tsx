@@ -7,13 +7,13 @@ import ButtonWithIcon from "../ui/Buttons/ButtonWithIcon";
 function OrderedList({ editor }: { editor: Editor | null }) {
   const orderedListHandler = useCallback(
     () => editor?.chain().focus().toggleOrderedList().run(),
-    [editor]
+    [editor],
   );
   return (
     <Tooltip content="Ordered List" position="bottom-end" delay={700}>
       <ButtonWithIcon
-        btnSize="md"
-        icon={<MdOutlineFormatListNumbered size={20} />}
+        btnSize="sm"
+        icon={<MdOutlineFormatListNumbered size={16} />}
         onClick={orderedListHandler}
         shape="md"
       />

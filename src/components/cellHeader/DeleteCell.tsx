@@ -19,9 +19,9 @@ function DeleteCell({ cellId }: propType) {
   return (
     <Tooltip content="Delete Note" position="bottom-end" delay={700}>
       <ButtonWithIcon
-        btnSize="md"
+        btnSize="sm"
         variant="delete"
-        icon={<MdDeleteOutline size={20} />}
+        icon={<MdDeleteOutline size={16} />}
         onClick={clickHandler}
       />
     </Tooltip>
