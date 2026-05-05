@@ -12,6 +12,7 @@ import CellsProvider from "./components/contexts/cell/CellsContext";
 import RemoveCellProvider from "./components/contexts/cell/Remove";
 import PDFProvider from "./components/contexts/ExportPDFModal/PDFProvider";
 import { CssBaseline } from "@mui/material";
+import { AIModalProvider } from "./components/contexts/AIModal/AIModalContext";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -24,8 +25,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                 <RemoveCellProvider>
                   <PDFProvider>
                     <NewFileProvider>
-                      <CssBaseline />
-                      <App />
+                      <AIModalProvider>
+                        <CssBaseline />
+                        <App />
+                      </AIModalProvider>
                     </NewFileProvider>
                   </PDFProvider>
                 </RemoveCellProvider>
@@ -35,5 +38,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         </MainFileName>
       </FilesProvider>
     </ToastProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

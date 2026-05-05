@@ -11,6 +11,8 @@ import ExportPDFModal from "../contexts/ExportPDFModal/ExportPDFModal";
 import NewFileModal from "./NewFileModal";
 import useNewFile from "../contexts/newfile/useNewFile";
 import useFilesContext from "../contexts/FilesContext/useFilesContext";
+import { useAIModal } from "../contexts/AIModal/AIModalContext";
+import AISettingsModal from "../AI/AISettingsModal";
 
 function ShowModals() {
   const { openFontModal } = useFont();
@@ -31,6 +33,7 @@ function ShowModals() {
   });
 
   const { openNewFileModal } = useNewFile();
+  const { openAISettingsModal } = useAIModal();
 
   const removeCellHandler = useCallback(
     (cellId: string) => {
@@ -43,7 +46,7 @@ function ShowModals() {
 
       localStorage.removeItem(cellId);
     },
-    [saveFile, setCells]
+    [saveFile, setCells],
   );
 
   const { openExportModal } = useExportPDF();
@@ -71,6 +74,7 @@ function ShowModals() {
       )}
       {openExportModal && <ExportPDFModal />}
       {openNewFileModal && <NewFileModal />}
+      {openAISettingsModal && <AISettingsModal />}
     </div>
   );
 }

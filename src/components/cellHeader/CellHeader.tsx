@@ -9,13 +9,16 @@ import Bold from "./Bold";
 import Italic from "./Italic";
 import { memo } from "react";
 import Heading from "./Heading";
+import AIButton from "./AIButton";
 
 type propType = {
   cellId: string;
   editor: Editor | null;
+  isAIActive: boolean;
+  onToggleAI: () => void;
 };
 
-function CellHeader({ cellId, editor }: propType) {
+function CellHeader({ cellId, editor, isAIActive, onToggleAI }: propType) {
   return (
     <div className="cell-header">
       <DeleteCell cellId={cellId} />
@@ -27,6 +30,7 @@ function CellHeader({ cellId, editor }: propType) {
       <Italic editor={editor} />
       <Bold editor={editor} />
       <Heading editor={editor} />
+      <AIButton isActive={isAIActive} onToggle={onToggleAI} />
     </div>
   );
 }

@@ -8,6 +8,7 @@ import History from "@tiptap/extension-history";
 import CellHeader from "../cellHeader/CellHeader";
 import CellCollapseToggle from "./CellCollapseToggle";
 import TiptapCellEditor from "./TiptapCellEditor";
+import AIPanel from "../AI/AIPanel";
 import debounce from "lodash.debounce";
 import WordCount from "./WordCount";
 import useFilesContext from "../contexts/FilesContext/useFilesContext";
@@ -42,6 +43,9 @@ export default function CellWrapper({
 }: CellWrapperProps) {
   const [content, setContent] = useState(initialContent);
   const [isOpen, setIsOpen] = useState(initialIsOpen);
+  const [isAIOpen, setIsAIOpen] = useState(false);
+  const handleToggleAI = useCallback(() => setIsAIOpen((v) => !v), []);
+  const handleCloseAI = useCallback(() => setIsAIOpen(false), []);
   const { updateFileMeta, activeFile, files } = useFilesContext();
 
   const onContentUpdateRef = useRef(onContentUpdate);
@@ -55,7 +59,7 @@ export default function CellWrapper({
       debounce((html: string) => {
         onContentUpdateRef.current(html);
       }, 1000),
-    []
+    [],
   );
 
   const filesRef = useRef(files);
@@ -82,7 +86,7 @@ export default function CellWrapper({
         }
       }
     },
-    [activeFile, debouncedUpdate]
+    [activeFile, debouncedUpdate],
   );
 
   const editorProps = useMemo(
@@ -103,7 +107,7 @@ export default function CellWrapper({
         },
       },
     }),
-    []
+    [],
   );
 
   const extensions = useMemo(
@@ -144,7 +148,7 @@ export default function CellWrapper({
           text.split(/\s+/).filter((word) => word !== "").length,
       }),
     ],
-    []
+    [],
   );
 
   const noScrollPlugin = new Plugin({
@@ -174,12 +178,18 @@ export default function CellWrapper({
 
   return (
     <div className="relative w-full mx-auto max-w-3xl mb-4 transition-all group shadow-primary dark:shadow-sm dark:shadow-black/10 bg-cell-light dark:bg-cell-dark rounded-lg duration-200 overflow-hidden">
-      <CellHeader editor={editor} cellId={cellId} />
+      <CellHeader
+        editor={editor}
+        cellId={cellId}
+        isAIActive={isAIOpen}
+        onToggleAI={handleToggleAI}
+      />
       <CellCollapseToggle setIsOpen={setIsOpen} isOpen={isOpen} />
       {isOpen && (
         <TiptapCellEditor key={cellId} content={content} editor={editor} />
       )}
       {isOpen && <WordCount editor={editor} />}
+      {isAIOpen && <AIPanel editor={editor} onClose={handleCloseAI} />}
     </div>
   );
 }
