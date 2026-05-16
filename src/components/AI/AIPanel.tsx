@@ -54,21 +54,23 @@ function AIPanel({ editor, onClose }: AIPanelProps) {
     [editor],
   );
 
+  const simpleMarkdownToHtml = (text: string) => {
+    let html = text
+      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+      .replace(/\*(.*?)\*/g, "<em>$1</em>")
+      .replace(/`(.*?)`/g, "<code>$1</code>");
+    return `<p>${html.replace(/\n\n/g, "</p><p>").replace(/\n/g, "<br/>")}</p>`;
+  };
+
   const handleApply = useCallback(() => {
     if (!editor || !result) return;
-    editor.commands.setContent(
-      `<p>${result.replace(/\n\n/g, "</p><p>").replace(/\n/g, "<br/>")}</p>`,
-    );
+    editor.commands.setContent(simpleMarkdownToHtml(result));
     onClose();
   }, [editor, result, onClose]);
 
   const handleAppendAfter = useCallback(() => {
     if (!editor || !result) return;
-    const paragraphs = result
-      .split(/\n\n+/)
-      .map((p) => `<p>${p.replace(/\n/g, "<br/>")}</p>`)
-      .join("");
-    editor.commands.setContent(editor.getHTML() + paragraphs);
+    editor.commands.setContent(editor.getHTML() + simpleMarkdownToHtml(result));
     onClose();
   }, [editor, result, onClose]);
 

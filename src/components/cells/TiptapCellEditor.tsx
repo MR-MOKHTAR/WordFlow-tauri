@@ -12,7 +12,7 @@ function TiptapCellEditor({ content, editor }: TiptapCellEditorProps) {
 
   // فقط وقتی content واقعی تغییر کند، editor آپدیت می‌شود
   useEffect(() => {
-    if (!editor) return;
+    if (!editor || editor.isDestroyed) return;
     if (editor.getHTML() !== content) {
       editor.commands.setContent(content);
     }
@@ -28,7 +28,7 @@ function TiptapCellEditor({ content, editor }: TiptapCellEditorProps) {
   );
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full cursor-text" onClick={() => editor?.chain().focus().run()}>
       <EditorContent
         editor={editor}
         className="py-4 px-5 min-h-[35px] text-justify tracking-normal whitespace-pre-wrap caret-cyan-700 text-CellHeader-light dark:text-CellHeader-dark"

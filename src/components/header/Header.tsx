@@ -8,7 +8,7 @@ import AISettingsBtn from "./AISettingsBtn";
 
 export default function Header() {
   return (
-    <div className="header flex-between fixed w-full h-9 px-2.5 shadow-sm z-20 bg-sidebar-light dark:bg-sidebar-dark backdrop-blur-md text-gray-800">
+    <div className="header flex-between fixed w-full h-10 px-3 shadow-sm border-b border-gray-200 dark:border-[#2a2a3e] z-20 bg-sidebar-light dark:bg-sidebar-dark text-gray-800 transition-all">
       <HeaderRight />
 
       <div className="flex items-center gap-x-1">

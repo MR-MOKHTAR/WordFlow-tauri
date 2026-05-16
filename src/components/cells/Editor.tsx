@@ -3,6 +3,7 @@ import CellWrapper from "./CellWrapper";
 import { useCellsContext } from "../contexts/cell/useCellsContext";
 import useCreatedNewCell from "../Hooks/useCreatedNewCell";
 import useFileName from "../contexts/fileName/useFileName";
+import useFilesContext from "../contexts/FilesContext/useFilesContext";
 import useSaveFile from "../SaveFile/useSaveFile";
 import Scroller from "./ScrollBar";
 import { useViewportHeight } from "../Hooks/useViewportHeight";
@@ -29,6 +30,7 @@ export default function TipTap() {
     useCellsContext();
   const createdNewCell = useCreatedNewCell();
   const { fileName } = useFileName();
+  const { activeFile } = useFilesContext();
   const saveFile = useSaveFile();
   const viewportHeight = useViewportHeight();
 
@@ -80,7 +82,7 @@ export default function TipTap() {
       return (
         <div
           key={cell.id}
-          className="mt-1.5 px-4 md:px-8 transition-all duration-300 ease-in-out transform animate-fade-in"
+          className="mt-1.5 px-4 md:px-8 animate-fade-in"
         >
           <MemoizedCellWrapper
             initialContent={cell.content}
@@ -139,11 +141,15 @@ export default function TipTap() {
   // Render
   // ---------------------------
 
+  if (fileName !== activeFile) {
+    return null; // Prevents Virtuoso glitch during file switch
+  }
+
   return (
     <Virtuoso
       key={fileName}
       style={{
-        height: Math.max(viewportHeight - 36, 0),
+        height: Math.max(viewportHeight - 40, 0),
         width: "100%",
       }}
       totalCount={cells.length}

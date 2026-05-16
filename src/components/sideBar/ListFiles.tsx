@@ -20,21 +20,25 @@ export default function ListFiles() {
       setAnchorEl(e.currentTarget as unknown as HTMLElement);
       setMenuOpen((prev) => (prev === file ? null : file));
     },
-    []
+    [],
   );
 
   const handleFileClick = useCallback(
     async (file: string) => {
       const prevFile = activeFile;
 
-      await openFileWithFetch(file);
+      // اول fileName را set کن تا Editor فوری نمایش داده شود
       setFileName(file);
 
-      if (prevFile && files[prevFile]?.isDirty) {
+      // بعد فایل قبلی را ببند (قبل از fetch)
+      if (prevFile && prevFile !== file && files[prevFile]?.isDirty) {
         closeFile(prevFile, saveFile);
       }
+
+      // سپس داده‌ها را fetch کن
+      await openFileWithFetch(file);
     },
-    [activeFile, files, openFileWithFetch, setFileName, closeFile, saveFile]
+    [activeFile, files, openFileWithFetch, setFileName, closeFile, saveFile],
   );
 
   const getMenuItems = useCallback(
@@ -51,7 +55,7 @@ export default function ListFiles() {
         },
       },
     ],
-    [setSelectedFile, setOpenDeleteFileModal]
+    [setSelectedFile, setOpenDeleteFileModal],
   );
 
   return (

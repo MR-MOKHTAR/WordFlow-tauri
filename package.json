@@ -21,6 +21,7 @@
     "@tauri-apps/plugin-global-shortcut": "^2.3.0",
     "@tauri-apps/plugin-opener": "^2",
     "@tiptap/extension-history": "^3.4.4",
+    "@tiptap/extension-text-align": "^3.23.1",
     "@tiptap/extension-text-style": "^3.4.4",
     "@tiptap/extensions": "^3.4.4",
     "@tiptap/react": "^3.4.4",

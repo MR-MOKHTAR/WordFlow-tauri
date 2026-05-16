@@ -5,6 +5,7 @@ import { Extension } from "@tiptap/core";
 import { CharacterCount } from "@tiptap/extensions";
 import { Plugin } from "prosemirror-state";
 import History from "@tiptap/extension-history";
+import TextAlignExtension from "@tiptap/extension-text-align";
 import CellHeader from "../cellHeader/CellHeader";
 import CellCollapseToggle from "./CellCollapseToggle";
 import TiptapCellEditor from "./TiptapCellEditor";
@@ -12,6 +13,7 @@ import AIPanel from "../AI/AIPanel";
 import debounce from "lodash.debounce";
 import WordCount from "./WordCount";
 import useFilesContext from "../contexts/FilesContext/useFilesContext";
+import useSaveFile from "../SaveFile/useSaveFile";
 
 type CellWrapperProps = {
   initialContent: string;
@@ -47,6 +49,19 @@ export default function CellWrapper({
   const handleToggleAI = useCallback(() => setIsAIOpen((v) => !v), []);
   const handleCloseAI = useCallback(() => setIsAIOpen(false), []);
   const { updateFileMeta, activeFile, files } = useFilesContext();
+  const saveFile = useSaveFile({ mode: "instant" });
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isAIOpen && containerRef.current) {
+      setTimeout(() => {
+        containerRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+        });
+      }, 100);
+    }
+  }, [isAIOpen]);
 
   const onContentUpdateRef = useRef(onContentUpdate);
 
@@ -110,8 +125,24 @@ export default function CellWrapper({
     [],
   );
 
-  const extensions = useMemo(
-    () => [
+  const extensions = useMemo(() => {
+    const AIHotkey = Extension.create({
+      name: "aiHotkey",
+      addKeyboardShortcuts() {
+        return {
+          "Mod-j": () => {
+            handleToggleAI();
+            return true;
+          },
+          "Mod-ت": () => {
+            handleToggleAI();
+            return true;
+          },
+        };
+      },
+    });
+
+    return [
       StarterKit.configure({
         undoRedo: false,
         orderedList: {
@@ -147,9 +178,13 @@ export default function CellWrapper({
         wordCounter: (text) =>
           text.split(/\s+/).filter((word) => word !== "").length,
       }),
-    ],
-    [],
-  );
+      TextAlignExtension.configure({
+        types: ["heading", "paragraph", "listItem"],
+        defaultAlignment: "right",
+      }),
+      AIHotkey,
+    ];
+  }, [handleToggleAI]);
 
   const noScrollPlugin = new Plugin({
     props: {
@@ -163,10 +198,17 @@ export default function CellWrapper({
     extensions,
     content,
     onUpdate: ({ editor }) => handleUpdate(editor.getHTML()),
+    onBlur: () => {
+      if (activeFile) {
+        saveFile(activeFile);
+      }
+    },
     editorProps: editorProps,
   });
 
-  editor.registerPlugin(noScrollPlugin);
+  if (editor && !editor.isDestroyed) {
+    editor.registerPlugin(noScrollPlugin);
+  }
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -177,7 +219,15 @@ export default function CellWrapper({
   }, [cellId, isOpen]);
 
   return (
-    <div className="relative w-full mx-auto max-w-3xl mb-4 transition-all group shadow-primary dark:shadow-sm dark:shadow-black/10 bg-cell-light dark:bg-cell-dark rounded-lg duration-200 overflow-hidden">
+    <div
+      ref={containerRef}
+      onClick={() => {
+        if (!isOpen) setIsOpen(true);
+      }}
+      className={`relative w-full mx-auto max-w-3xl mb-6 transition group shadow-sm hover:shadow-primary dark:shadow-none dark:border dark:border-white/5 bg-cell-light dark:bg-cell-dark rounded-xl duration-300 ease-in-out overflow-hidden ${
+        !isOpen ? "cursor-pointer" : ""
+      }`}
+    >
       <CellHeader
         editor={editor}
         cellId={cellId}

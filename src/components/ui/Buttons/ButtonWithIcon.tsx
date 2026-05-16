@@ -40,8 +40,8 @@ const ButtonWithIcon = memo(function ButtonWithIcon({
   const variantMap: Record<ButtonVariant, string> = {
     default: clsx(
       "text-gray-800 dark:text-gray-200",
-      "hover:bg-gray-200 dark:hover:bg-gray-700",
-      "hover:text-gray-900 dark:hover:text-white"
+      "hover:bg-gray-100 dark:hover:bg-white/10",
+      "hover:text-primary-light dark:hover:text-primary-dark"
     ),
     delete: clsx(
       "text-red-900 dark:text-red-400",

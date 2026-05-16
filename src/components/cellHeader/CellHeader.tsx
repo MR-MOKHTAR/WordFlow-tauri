@@ -10,6 +10,7 @@ import Italic from "./Italic";
 import { memo } from "react";
 import Heading from "./Heading";
 import AIButton from "./AIButton";
+import TextAlign from "./TextAlign";
 
 type propType = {
   cellId: string;
@@ -20,17 +21,20 @@ type propType = {
 
 function CellHeader({ cellId, editor, isAIActive, onToggleAI }: propType) {
   return (
-    <div className="cell-header">
-      <DeleteCell cellId={cellId} />
-      <CopyButton cellId={cellId} />
-      <Redo editor={editor} />
-      <Undo editor={editor} />
-      <OrderedList editor={editor} />
-      <BulletList editor={editor} />
-      <Italic editor={editor} />
-      <Bold editor={editor} />
-      <Heading editor={editor} />
-      <AIButton isActive={isAIActive} onToggle={onToggleAI} />
+    <div className="cell-header pointer-events-none">
+      <div className="flex items-center gap-x-1 pointer-events-auto">
+        <DeleteCell cellId={cellId} />
+        <CopyButton cellId={cellId} />
+        <Redo editor={editor} />
+        <Undo editor={editor} />
+        <OrderedList editor={editor} />
+        <BulletList editor={editor} />
+        <Italic editor={editor} />
+        <Bold editor={editor} />
+        <TextAlign editor={editor} />
+        <Heading editor={editor} />
+        <AIButton isActive={isAIActive} onToggle={onToggleAI} />
+      </div>
     </div>
   );
 }

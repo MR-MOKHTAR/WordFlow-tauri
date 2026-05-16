@@ -37,15 +37,15 @@ const FileItem = React.memo(
 
     return (
       <li
+        onClick={onFileClick}
         className={`flex-between group relative cursor-pointer py-1.5 px-2 rounded-md transition-colors duration-150 ${
           isActive
             ? "bg-[#E2E8F0] dark:bg-hover-dark"
             : "hover:bg-[#e2e8f0] dark:hover:bg-[#44475A]/40"
         }`}
       >
-        <span
-          className="flex items-center gap-x-2 flex-1 min-w-0 h-full transition-all overflow-hidden"
-          onClick={onFileClick}
+        <div
+          className="flex items-center gap-x-2 flex-1 min-w-0 h-full overflow-hidden"
         >
           <GoFile
             className={`shrink-0 transition-colors duration-150 ${
@@ -64,7 +64,7 @@ const FileItem = React.memo(
           >
             {file.replace(/\.json$/i, "")}
           </span>
-        </span>
+        </div>
 
         <span className="relative flex items-center justify-center h-5 min-w-5 shrink-0">
           {isDirty && (

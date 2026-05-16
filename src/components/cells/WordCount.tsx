@@ -6,7 +6,11 @@ function WordCount({ editor }: { editor: Editor }) {
   const state = useEditorState({
     editor,
     selector: (context) => {
-      if (context.editor) {
+      if (
+        context.editor &&
+        !context.editor.isDestroyed &&
+        context.editor.storage.characterCount
+      ) {
         return {
           charactersCount: context.editor.storage.characterCount.characters(),
           wordsCount: context.editor.storage.characterCount.words(),
@@ -23,7 +27,7 @@ function WordCount({ editor }: { editor: Editor }) {
     <div
       className={`absolute font-Amiri bottom-0 left-3 flex items-center gap-x-1 text-xs 
         text-neutral-600 dark:text-neutral-300
-        transition-opacity ${editor.isFocused ? "opacity-95" : "opacity-40"}`}
+        transition-opacity ${editor?.isFocused ? "opacity-95" : "opacity-40"}`}
     >
       <span>کلمات: {formatNumber(totalWords)}</span>
       <span className="mx-1">|</span>

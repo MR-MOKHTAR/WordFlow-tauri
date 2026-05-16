@@ -10,36 +10,36 @@
 
 @theme {
   /* ========= پس‌زمینه ========= */
-  --color-sidebar-light: #f7f7f9;
-  --color-sidebar-dark: #1e1f29;
+  --color-sidebar-light: #f8fafc;
+  --color-sidebar-dark: #1e1e2e;
 
-  --color-canvas-light: #e0e0e5;
-  --color-canvas-dark: #343744;
+  --color-canvas-light: #f1f5f9;
+  --color-canvas-dark: #181825;
 
-  --color-cell-light: #f7f7f9;
-  --color-cell-dark: #282a36;
+  --color-cell-light: #ffffff;
+  --color-cell-dark: #27273a;
 
-  --color-modal-container-light: rgba(0, 0, 0, 0.5);
+  --color-modal-container-light: rgba(15, 23, 42, 0.4);
   --color-modal-content-light: #ffffff;
-  --color-modal-container-dark: rgba(40, 42, 54, 0.7);
-  --color-modal-content-dark: #282a36;
+  --color-modal-container-dark: rgba(0, 0, 0, 0.6);
+  --color-modal-content-dark: #1e1e2e;
 
   --color-context-light: #ffffff;
-  --color-context-dark: #2a2c38;
-  --border-context-light: #d9d9e0;
-  --border-context-dark: #3b3d4a;
-  --color-hover-light: #e2e8f0;
-  --color-hover-dark: #3a3d52;
+  --color-context-dark: #2a2a3e;
+  --border-context-light: #e2e8f0;
+  --border-context-dark: #3f3f5a;
+  --color-hover-light: #f1f5f9;
+  --color-hover-dark: #3f3f5a;
 
   /* ========= متن ========= */
-  --color-header-light: #1e1e1e;
-  --color-header-dark: #e6e6eb;
+  --color-header-light: #0f172a;
+  --color-header-dark: #f8fafc;
 
-  --color-CellHeader-light: #1a1a1a;
-  --color-CellHeader-dark: #f2f2f5;
+  --color-CellHeader-light: #334155;
+  --color-CellHeader-dark: #cbd5e1;
 
-  --color-modal-light: #1f1f1f;
-  --color-modal-dark: #cfcfd6;
+  --color-modal-light: #0f172a;
+  --color-modal-dark: #f8fafc;
 
   /* ========= فونت‌ها ========= */
   --font-Vazir: "Vazir";
@@ -55,18 +55,20 @@
   --font-NotoKufiArabic: "Noto Kufi Arabic";
 
   /* ========= رنگ‌های اولیه ========= */
-  --color-primary-light: #282a36;
-  --color-primary-dark: #f8f8f2;
+  --color-primary-light: #6366f1;
+  --color-primary-dark: #818cf8;
 
   /* ========= شادو ========= */
-  --shadow-primary: 0 0 8px 2px rgba(200, 200, 200, 0.4);
-  --shadow-cell-header: 0 0 0px 1px;
+  --shadow-primary: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  --shadow-primary-dark: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+  --shadow-cell-header: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 @layer utilities {
   body {
-    @apply bg-gray-50 dark:bg-[#282a36] selection:bg-[#44475A] leading-relaxed;
+    @apply bg-canvas-light dark:bg-canvas-dark text-header-light dark:text-header-dark selection:bg-primary-light/20 dark:selection:bg-primary-dark/30 leading-relaxed;
   }
+
   /* Active App Arag With Header */
 
   .header {
@@ -111,7 +113,7 @@
   }
 
   .cell-header {
-    @apply sticky top-0 flex items-center justify-end h-9 pl-1.5 pr-10 lg:pl-2.5 lg:pr-12 gap-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-md shadow-cell-header shadow-stone-300/75 dark:shadow-stone-700/75;
+    @apply sticky top-0 flex items-center justify-end h-10 pl-1.5 pr-10 lg:pl-2.5 lg:pr-12 gap-x-1 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white dark:bg-[#1e1e2e] border-b border-gray-100 dark:border-white/5 shadow-cell-header rounded-t-xl z-10;
   }
 
   .order-list {
@@ -206,6 +208,31 @@
       box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
       transform: scale(1);
     }
+  }
+
+  @keyframes ai-shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  @keyframes ai-glow-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 5px rgba(139, 92, 246, 0.3),
+        0 0 10px rgba(139, 92, 246, 0.2);
+    }
+    50% {
+      box-shadow: 0 0 15px rgba(139, 92, 246, 0.6),
+        0 0 25px rgba(167, 139, 250, 0.4);
+    }
+  }
+
+  .ai-btn-glow {
+    animation: ai-glow-pulse 3s infinite ease-in-out;
   }
 }
 
