@@ -4,6 +4,7 @@ export type CellType = {
   id: string;
   content: string;
   isOpen: boolean;
+  title?: string;
 };
 
 export type CellContextType = {

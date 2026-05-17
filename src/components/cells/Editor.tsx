@@ -21,7 +21,8 @@ import React, {
 const MemoizedCellWrapper = React.memo(CellWrapper, (prevProps, nextProps) => {
   return (
     prevProps.initialContent === nextProps.initialContent &&
-    prevProps.initialIsOpen === nextProps.initialIsOpen
+    prevProps.initialIsOpen === nextProps.initialIsOpen &&
+    prevProps.initialTitle === nextProps.initialTitle
   );
 });
 
@@ -66,6 +67,17 @@ export default function TipTap() {
     [setCells, setIsDirty, setHasLoadedOnce],
   );
 
+  const handleTitleUpdate = useCallback(
+    (cellId: string, newTitle: string) => {
+      setCells((prev) =>
+        prev.map((c) => (c.id === cellId ? { ...c, title: newTitle } : c)),
+      );
+      if (hasLoadedOnceRef.current) setIsDirty(true);
+      else setHasLoadedOnce(true);
+    },
+    [setCells, setIsDirty, setHasLoadedOnce],
+  );
+
   const renderItem = useCallback(
     (index: number) => {
       const cell = cells[index];
@@ -78,17 +90,28 @@ export default function TipTap() {
 
       const onUpdate = (newContent: string) =>
         handleContentUpdate(cell.id, newContent);
+      const onTitleUpdate = (newTitle: string) =>
+        handleTitleUpdate(cell.id, newTitle);
 
       return (
         <div
           key={cell.id}
-          className="mt-1.5 px-4 md:px-8 animate-fade-in"
+          className="mt-1.5 pl-4 pr-10 md:pl-8 md:pr-14 animate-fade-in relative max-w-3xl mx-auto"
         >
+          {/* Cell Number Badge */}
+          <div
+            className="absolute right-2 md:right-4 top-2 md:top-1 flex items-center justify-center w-6 h-6 md:w-8 md:h-8 rounded-full bg-violet-100 dark:bg-violet-900/40 text-violet-600 dark:text-violet-300 text-xs md:text-sm font-bold shadow-sm border border-violet-200 dark:border-violet-700/50 z-20 select-none"
+            title={`سلول ${index + 1}`}
+          >
+            {index + 1}
+          </div>
           <MemoizedCellWrapper
             initialContent={cell.content}
+            initialTitle={cell.title || ""}
             cellId={cell.id}
             initialIsOpen={initialIsOpen}
             onContentUpdate={onUpdate}
+            onTitleUpdate={onTitleUpdate}
           />
         </div>
       );

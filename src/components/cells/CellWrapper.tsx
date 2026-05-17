@@ -17,8 +17,10 @@ import useSaveFile from "../SaveFile/useSaveFile";
 
 type CellWrapperProps = {
   initialContent: string;
+  initialTitle: string;
   cellId: string;
   onContentUpdate: (content: string) => void;
+  onTitleUpdate: (title: string) => void;
   initialIsOpen: () => boolean;
 };
 
@@ -39,11 +41,14 @@ const RemoveOutline = Extension.create({
 
 export default function CellWrapper({
   initialContent,
+  initialTitle,
   cellId,
   onContentUpdate,
+  onTitleUpdate,
   initialIsOpen,
 }: CellWrapperProps) {
   const [content, setContent] = useState(initialContent);
+  const [title, setTitle] = useState(initialTitle);
   const [isOpen, setIsOpen] = useState(initialIsOpen);
   const [isAIOpen, setIsAIOpen] = useState(false);
   const handleToggleAI = useCallback(() => setIsAIOpen((v) => !v), []);
@@ -64,15 +69,28 @@ export default function CellWrapper({
   }, [isAIOpen]);
 
   const onContentUpdateRef = useRef(onContentUpdate);
+  const onTitleUpdateRef = useRef(onTitleUpdate);
 
   useEffect(() => {
     onContentUpdateRef.current = onContentUpdate;
   }, [onContentUpdate]);
 
+  useEffect(() => {
+    onTitleUpdateRef.current = onTitleUpdate;
+  }, [onTitleUpdate]);
+
   const debouncedUpdate = useMemo(
     () =>
       debounce((html: string) => {
         onContentUpdateRef.current(html);
+      }, 1000),
+    [],
+  );
+
+  const debouncedTitleUpdate = useMemo(
+    () =>
+      debounce((newTitle: string) => {
+        onTitleUpdateRef.current(newTitle);
       }, 1000),
     [],
   );
@@ -102,6 +120,22 @@ export default function CellWrapper({
       }
     },
     [activeFile, debouncedUpdate],
+  );
+
+  const handleTitleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newTitle = e.target.value;
+      setTitle(newTitle);
+      debouncedTitleUpdate(newTitle);
+
+      if (activeFile) {
+        const file = filesRef.current[activeFile];
+        if (file && !file.isDirty) {
+          updateFileMetaRef.current(activeFile, { isDirty: true });
+        }
+      }
+    },
+    [activeFile, debouncedTitleUpdate],
   );
 
   const editorProps = useMemo(
@@ -234,6 +268,25 @@ export default function CellWrapper({
         isAIActive={isAIOpen}
         onToggleAI={handleToggleAI}
       />
+      {/* Title Input */}
+      <div
+        className={`absolute top-0 left-0 w-full h-10 flex items-center justify-center pointer-events-none transition-opacity duration-300 z-10 ${
+          !isOpen
+            ? "opacity-100 group-hover:opacity-0"
+            : "opacity-30 hover:opacity-100 focus-within:opacity-100"
+        }`}
+      >
+        <input
+          type="text"
+          value={title}
+          onChange={handleTitleChange}
+          placeholder="عنوان سلول..."
+          className="pointer-events-auto bg-transparent text-center outline-none border-none text-sm font-medium text-gray-700 dark:text-gray-300 focus:text-primary-light dark:focus:text-primary-dark w-1/2"
+          onClick={(e) => {
+            if (!isOpen) e.stopPropagation();
+          }}
+        />
+      </div>
       <CellCollapseToggle setIsOpen={setIsOpen} isOpen={isOpen} />
       {isOpen && (
         <TiptapCellEditor key={cellId} content={content} editor={editor} />

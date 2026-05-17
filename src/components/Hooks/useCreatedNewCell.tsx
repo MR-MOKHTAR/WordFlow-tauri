@@ -20,6 +20,7 @@ export default function useCreatedNewCell() {
           id: crypto.randomUUID(),
           content: "",
           isOpen: true,
+          title: "",
         };
 
         setCells((prev: CellType[]) => {
