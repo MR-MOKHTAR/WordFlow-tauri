@@ -104,8 +104,9 @@
   /* .tiptap-editor * {
 
   } */
-  .tiptap-editor p {
-    @apply pb-2;
+  .tiptap-editor p,
+  .tiptap-editor li {
+    @apply pb-2 leading-[2.2];
   }
   .tiptap-editor:focus {
     outline: none !important;
