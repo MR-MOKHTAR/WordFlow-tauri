@@ -3,9 +3,11 @@ import useSaveFile from "../SaveFile/useSaveFile";
 import Tooltip from "../ui/Tooltip";
 import useFilesContext from "../contexts/FilesContext/useFilesContext";
 import { useCallback, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import ButtonWithIcon from "../ui/Buttons/ButtonWithIcon";
 
 export default function SaveButton() {
+  const { t } = useTranslation();
   const { activeFile } = useFilesContext();
 
   const saveFile = useSaveFile({ mode: "instant", throttleDelay: 500 });
@@ -39,7 +41,7 @@ export default function SaveButton() {
   }, []); // ✅ فقط یکبار listener ثبت می‌شود و دیگر re-register نمی‌کند
 
   return (
-    <Tooltip content={`Save (Ctrl+S)`}>
+    <Tooltip content={t("header.saveTooltip")}>
       <ButtonWithIcon
         btnSize="sm"
         onClick={handleClick}

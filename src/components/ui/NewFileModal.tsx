@@ -7,8 +7,10 @@ import {
 } from "react";
 import MyModal from "./MyModal";
 import useNewFile from "../contexts/newfile/useNewFile";
+import { useTranslation } from "react-i18next";
 
 function NewFileModal() {
+  const { t } = useTranslation();
   const [fileName, setFileName] = useState("");
   const { onClose, onCreate } = useNewFile();
 
@@ -39,7 +41,7 @@ function NewFileModal() {
           type="text"
           autoFocus
           value={fileName}
-          placeholder="اسم فایل را وارد کنید..."
+          placeholder={t("newFile.placeholder")}
           aria-label="File Name"
           onChange={changeHandler}
           onKeyDown={keyDownHandler}
@@ -50,7 +52,7 @@ function NewFileModal() {
           onClick={handleSubmit}
           className="px-4 py-2 rounded-md bg-blue-600 text-white text-sm hover:bg-blue-700 focus:outline-none cursor-pointer font-bold focus:ring-2 focus:ring-blue-500"
         >
-          ایجاد
+          {t("newFile.create")}
         </button>
       </div>
     </MyModal>

@@ -1,19 +1,15 @@
 import { useCallback } from "react";
 import useFilesContext from "../contexts/FilesContext/useFilesContext";
-import { readDir } from "@tauri-apps/plugin-fs";
-import myAppDataPath from "../../services/tauri/AppDataPath";
+import { listNotes } from "../../services/db/notesRepo";
 
 export default function useFetchFiles() {
   const { openFile } = useFilesContext();
 
   const fetchFiles = useCallback(async () => {
     try {
-      const myAppDataDir = await myAppDataPath();
-      const files = await readDir(myAppDataDir);
-      const jsonFiles = files.filter((f) => f.name.endsWith(".json"));
-
-      jsonFiles.forEach((file) => openFile(file.name, []));
-      console.log(jsonFiles);
+      const names = await listNotes();
+      // Register each note in state; cells are lazily loaded on click.
+      names.forEach((name) => openFile(name, []));
     } catch (err) {
       console.error(err);
     }

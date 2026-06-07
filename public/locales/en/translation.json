@@ -1,8 +1,116 @@
 {
-  "welcome": "Welcome to my editor!",
-  "download": "Download",
-  "editor": {
-    "word_count": "Word Count",
-    "character_count": "Character Count"
+  "common": {
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "retry": "Retry",
+    "save": "Save",
+    "warning": "Warning!"
+  },
+  "header": {
+    "newNote": "New Note (Ctrl+N)",
+    "theme": "Toggle theme",
+    "language": "Language",
+    "fontSettings": "Font settings",
+    "aiSettings": "AI settings",
+    "aiAssistant": "AI Assistant",
+    "exportPdf": "Export PDF",
+    "save": "Save",
+    "saveTooltip": "Save (Ctrl+S)"
+  },
+  "language": {
+    "fa": "فارسی",
+    "ar": "العربية",
+    "en": "English"
+  },
+  "cell": {
+    "titlePlaceholder": "Cell title…",
+    "number": "Cell {{index}}",
+    "words": "Words",
+    "characters": "Characters",
+    "generateTitle": "Generate title with AI",
+    "emptyForTitle": "There is no text to generate a title from."
+  },
+  "delete": {
+    "message": "Deleting {{title}} cannot be undone.",
+    "confirm": "Are you sure you want to continue?",
+    "file": "file",
+    "note": "note"
+  },
+  "pdf": {
+    "generating": "Generating PDF…",
+    "success": "PDF created successfully.",
+    "error": "Failed to create PDF. Please try again.",
+    "folder": "Folder",
+    "app": "App",
+    "default": "Default",
+    "openFileFirst": "Open a file first to export a PDF!",
+    "requestSent": "PDF export requested, please wait…",
+    "openWindowError": "Failed to open the PDF save dialog"
+  },
+  "font": {
+    "title": "Font Settings",
+    "software": "Software",
+    "system": "System",
+    "size": "Size"
+  },
+  "align": {
+    "tooltip": "Text alignment",
+    "right": "Right",
+    "center": "Center",
+    "left": "Left",
+    "justify": "Justify"
+  },
+  "heading": {
+    "tooltip": "Heading",
+    "normal": "Normal",
+    "h1": "Heading 1",
+    "h2": "Heading 2",
+    "h3": "Heading 3",
+    "h4": "Heading 4"
+  },
+  "ai": {
+    "settings": "AI Settings",
+    "provider": "Provider",
+    "model": "Model",
+    "getApiKey": "Get API Key ↗",
+    "save": "Save Settings",
+    "saved": "✓ Saved!",
+    "info": "API keys are stored locally on your device only",
+    "closePanel": "Close AI panel",
+    "processing": "Processing…",
+    "emptyCell": "The cell is empty. Write something first.",
+    "result": "Result",
+    "replace": "Replace",
+    "append": "Append",
+    "tryAgain": "Try again",
+    "actions": {
+      "continue": "Continue",
+      "rephrase": "Rephrase",
+      "summarize": "Summarize",
+      "expand": "Expand",
+      "shorten": "Shorten",
+      "fix_grammar": "Fix Grammar",
+      "translate_en": "Translate → EN",
+      "translate_fa": "Translate → FA"
+    }
+  },
+  "welcome": {
+    "title": "Welcome to WordFlow",
+    "subtitle": "Write your notes with focus and speed",
+    "createNote": "Create a new note",
+    "createNoteDesc": "Create a new file to start writing",
+    "shortcutNewNote": "New note",
+    "shortcutSearch": "Search files",
+    "shortcutSettings": "App settings"
+  },
+  "newFile": {
+    "placeholder": "Enter a file name…",
+    "create": "Create"
+  },
+  "toast": {
+    "openOrCreateFile": "Please open a file or create a new one!",
+    "fileDeleted": "File {{name}} deleted successfully.",
+    "fileExists": "A file with this name already exists!",
+    "fileCreateError": "Failed to create file"
   }
 }

@@ -5,11 +5,13 @@ import { HiOutlineExternalLink, HiOutlineFolder } from "react-icons/hi";
 import { MdReplay } from "react-icons/md";
 import { HiOutlineDocument } from "react-icons/hi2";
 import { memo, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import LinearDeterminate from "./../../../components/ui/Progress";
 import { MdErrorOutline } from "react-icons/md";
 import UnifiedButton from "./../../../components/ui/Buttons/UnifiedButton";
 
 function ExportPDFModal() {
+  const { t } = useTranslation();
   const {
     setOpenExportModal,
     pdfPath,
@@ -62,11 +64,9 @@ function ExportPDFModal() {
 
         {/* متن وضعیت */}
         <span className="text-sm text-gray-600 dark:text-gray-300 text-center">
-          {isGenerating && "در حال ساخت فایل PDF..."}
-          {!isGenerating && isDone && "فایل PDF با موفقیت ساخته شد."}
-          {!isGenerating &&
-            isError &&
-            "خطا در ساخت فایل PDF. دوباره تلاش کنید."}
+          {isGenerating && t("pdf.generating")}
+          {!isGenerating && isDone && t("pdf.success")}
+          {!isGenerating && isError && t("pdf.error")}
         </span>
 
         {/* محتوای پایین */}
@@ -80,7 +80,7 @@ function ExportPDFModal() {
               onClick={handleOpenDirectory}
             >
               <HiOutlineFolder size={18} />
-              <span>پوشه</span>
+              <span>{t("pdf.folder")}</span>
             </UnifiedButton>
 
             <UnifiedButton
@@ -89,7 +89,7 @@ function ExportPDFModal() {
               onClick={handleOpenFileInApp}
             >
               <HiOutlineDocument size={18} />
-              <span>برنامه</span>
+              <span>{t("pdf.app")}</span>
             </UnifiedButton>
 
             <UnifiedButton
@@ -98,7 +98,7 @@ function ExportPDFModal() {
               onClick={handleOpenFile}
             >
               <HiOutlineExternalLink size={18} />
-              <span>پیش‌فرض</span>
+              <span>{t("pdf.default")}</span>
             </UnifiedButton>
           </div>
         )}
@@ -111,7 +111,7 @@ function ExportPDFModal() {
             onClick={() => {}}
           >
             <MdReplay size={18} />
-            <span> تلاش مجدد</span>
+            <span>{t("common.retry")}</span>
           </UnifiedButton>
         )}
       </div>

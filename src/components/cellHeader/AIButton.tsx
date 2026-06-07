@@ -1,6 +1,7 @@
 import { memo, useCallback } from "react";
 import { MdAutoAwesome } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import Tooltip from "../ui/Tooltip";
 import clsx from "clsx";
 
@@ -10,10 +11,11 @@ type AIButtonProps = {
 };
 
 function AIButton({ isActive, onToggle }: AIButtonProps) {
+  const { t } = useTranslation();
   const handleClick = useCallback(() => onToggle(), [onToggle]);
 
   return (
-    <Tooltip content="AI Assistant" position="bottom" delay={500}>
+    <Tooltip content={t("header.aiAssistant")} position="bottom" delay={500}>
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}

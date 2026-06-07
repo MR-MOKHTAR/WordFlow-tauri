@@ -3,10 +3,12 @@ import SelectField from "./SelectField";
 import MyModal from "../ui/MyModal";
 import useFont from "../contexts/FontModal/useFont";
 import { memo, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import FontSizeSlider from "./FontSizeSlider";
 import LivePreview from "./LivePreview";
 
 function FontModal() {
+  const { t } = useTranslation();
   const { setOpenFontModal } = useFont();
 
   const onClose = useCallback(
@@ -25,7 +27,7 @@ function FontModal() {
 
         {/* عنوان */}
         <h2 className="text-center font-bold text-2xl tracking-tight whitespace-nowrap">
-          تنظیمات فونت
+          {t("font.title")}
         </h2>
 
         {/* دایره تزئینی سمت راست */}
@@ -38,16 +40,16 @@ function FontModal() {
       <div className="space-y-8 mx-auto flex-center! flex-col">
         <div className="flex-between gap-12 *:flex-1">
           <div className="flex-between gap-x-3">
-            <LabelWithDot htmlFor="fontFamily">نرم افزار</LabelWithDot>
+            <LabelWithDot htmlFor="fontFamily">{t("font.software")}</LabelWithDot>
             <SelectField />
           </div>
           <div className="flex-between gap-x-3">
-            <LabelWithDot htmlFor="fontFamily">سیستم</LabelWithDot>
+            <LabelWithDot htmlFor="fontFamily">{t("font.system")}</LabelWithDot>
             <SelectField />
           </div>
         </div>
         <div className="flex-between gap-x-3">
-          <LabelWithDot htmlFor="fontSize">اندازه</LabelWithDot>
+          <LabelWithDot htmlFor="fontSize">{t("font.size")}</LabelWithDot>
           <FontSizeSlider />
         </div>
         <LivePreview />

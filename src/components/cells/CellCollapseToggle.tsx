@@ -13,14 +13,12 @@ function CellCollapseToggle({ isOpen, setIsOpen }: propType) {
     [setIsOpen],
   );
   return (
-    <div className="absolute right-1.5 lg:right-2.5 top-1 z-10">
-      <ButtonWithIcon
-        icon={isOpen ? <FiMinus size={16} /> : <FiPlus size={16} />}
-        btnSize="sm"
-        shape="md"
-        onClick={clickHandler}
-      />
-    </div>
+    <ButtonWithIcon
+      icon={isOpen ? <FiMinus size={16} /> : <FiPlus size={16} />}
+      btnSize="sm"
+      shape="md"
+      onClick={clickHandler}
+    />
   );
 }
 

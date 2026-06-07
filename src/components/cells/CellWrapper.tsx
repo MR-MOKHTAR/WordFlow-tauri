@@ -7,20 +7,18 @@ import { Plugin } from "prosemirror-state";
 import History from "@tiptap/extension-history";
 import TextAlignExtension from "@tiptap/extension-text-align";
 import CellHeader from "../cellHeader/CellHeader";
-import CellCollapseToggle from "./CellCollapseToggle";
 import TiptapCellEditor from "./TiptapCellEditor";
 import AIPanel from "../AI/AIPanel";
 import debounce from "lodash.debounce";
 import WordCount from "./WordCount";
 import useFilesContext from "../contexts/FilesContext/useFilesContext";
 import useSaveFile from "../SaveFile/useSaveFile";
+import { setCellFlush, clearCellFlush } from "./editorRegistry";
 
 type CellWrapperProps = {
   initialContent: string;
-  initialTitle: string;
   cellId: string;
   onContentUpdate: (content: string) => void;
-  onTitleUpdate: (title: string) => void;
   initialIsOpen: () => boolean;
 };
 
@@ -41,14 +39,11 @@ const RemoveOutline = Extension.create({
 
 export default function CellWrapper({
   initialContent,
-  initialTitle,
   cellId,
   onContentUpdate,
-  onTitleUpdate,
   initialIsOpen,
 }: CellWrapperProps) {
   const [content, setContent] = useState(initialContent);
-  const [title, setTitle] = useState(initialTitle);
   const [isOpen, setIsOpen] = useState(initialIsOpen);
   const [isAIOpen, setIsAIOpen] = useState(false);
   const handleToggleAI = useCallback(() => setIsAIOpen((v) => !v), []);
@@ -69,28 +64,15 @@ export default function CellWrapper({
   }, [isAIOpen]);
 
   const onContentUpdateRef = useRef(onContentUpdate);
-  const onTitleUpdateRef = useRef(onTitleUpdate);
 
   useEffect(() => {
     onContentUpdateRef.current = onContentUpdate;
   }, [onContentUpdate]);
 
-  useEffect(() => {
-    onTitleUpdateRef.current = onTitleUpdate;
-  }, [onTitleUpdate]);
-
   const debouncedUpdate = useMemo(
     () =>
       debounce((html: string) => {
         onContentUpdateRef.current(html);
-      }, 1000),
-    [],
-  );
-
-  const debouncedTitleUpdate = useMemo(
-    () =>
-      debounce((newTitle: string) => {
-        onTitleUpdateRef.current(newTitle);
       }, 1000),
     [],
   );
@@ -120,22 +102,6 @@ export default function CellWrapper({
       }
     },
     [activeFile, debouncedUpdate],
-  );
-
-  const handleTitleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newTitle = e.target.value;
-      setTitle(newTitle);
-      debouncedTitleUpdate(newTitle);
-
-      if (activeFile) {
-        const file = filesRef.current[activeFile];
-        if (file && !file.isDirty) {
-          updateFileMetaRef.current(activeFile, { isDirty: true });
-        }
-      }
-    },
-    [activeFile, debouncedTitleUpdate],
   );
 
   const editorProps = useMemo(
@@ -214,7 +180,6 @@ export default function CellWrapper({
       }),
       TextAlignExtension.configure({
         types: ["heading", "paragraph", "listItem"],
-        defaultAlignment: "right",
       }),
       AIHotkey,
     ];
@@ -252,13 +217,25 @@ export default function CellWrapper({
     return () => clearTimeout(timeout);
   }, [cellId, isOpen]);
 
+  // ثبت دسترسی به محتوای زنده‌ی ادیتور تا ذخیره (Ctrl+S/blur/بستن) همیشه
+  // آخرین متن را بگیرد، نه نسخه‌ی debounce-شده‌ی state.
+  useEffect(() => {
+    if (!editor) return;
+    setCellFlush(cellId, {
+      getContent: () => (editor.isDestroyed ? content : editor.getHTML()),
+      cancelContent: () => debouncedUpdate.cancel(),
+    });
+    return () => clearCellFlush(cellId, ["getContent", "cancelContent"]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editor, cellId, debouncedUpdate]);
+
   return (
     <div
       ref={containerRef}
       onClick={() => {
         if (!isOpen) setIsOpen(true);
       }}
-      className={`relative w-full mx-auto max-w-3xl mb-6 transition group shadow-sm hover:shadow-primary dark:shadow-none dark:border dark:border-white/5 bg-cell-light dark:bg-cell-dark rounded-xl duration-300 ease-in-out overflow-hidden ${
+      className={`relative w-full mb-6 transition group shadow-sm hover:shadow-primary dark:shadow-none dark:border dark:border-white/5 bg-cell-light dark:bg-cell-dark rounded-xl duration-300 ease-in-out overflow-hidden ${
         !isOpen ? "cursor-pointer" : ""
       }`}
     >
@@ -267,27 +244,9 @@ export default function CellWrapper({
         cellId={cellId}
         isAIActive={isAIOpen}
         onToggleAI={handleToggleAI}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
       />
-      {/* Title Input */}
-      <div
-        className={`absolute top-0 left-0 w-full h-10 flex items-center justify-center pointer-events-none transition-opacity duration-300 z-10 ${
-          !isOpen
-            ? "opacity-100 group-hover:opacity-0"
-            : "opacity-30 hover:opacity-100 focus-within:opacity-100"
-        }`}
-      >
-        <input
-          type="text"
-          value={title}
-          onChange={handleTitleChange}
-          placeholder="عنوان سلول..."
-          className="pointer-events-auto bg-transparent text-center outline-none border-none text-sm font-medium text-gray-700 dark:text-gray-300 focus:text-primary-light dark:focus:text-primary-dark w-1/2"
-          onClick={(e) => {
-            if (!isOpen) e.stopPropagation();
-          }}
-        />
-      </div>
-      <CellCollapseToggle setIsOpen={setIsOpen} isOpen={isOpen} />
       {isOpen && (
         <TiptapCellEditor key={cellId} content={content} editor={editor} />
       )}

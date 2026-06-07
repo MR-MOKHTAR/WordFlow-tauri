@@ -1,8 +1,116 @@
 {
-  "welcome": "به ویرایشگر من خوش آمدید!",
-  "download": "دانلود",
-  "editor": {
-    "word_count": "تعداد کلمات",
-    "character_count": "تعداد حروف"
+  "common": {
+    "cancel": "انصراف",
+    "delete": "حذف",
+    "retry": "تلاش مجدد",
+    "save": "ذخیره",
+    "warning": "هشدار!"
+  },
+  "header": {
+    "newNote": "یادداشت جدید (Ctrl+N)",
+    "theme": "تغییر پوسته",
+    "language": "زبان",
+    "fontSettings": "تنظیمات فونت",
+    "aiSettings": "تنظیمات هوش مصنوعی",
+    "aiAssistant": "دستیار هوش مصنوعی",
+    "exportPdf": "خروجی PDF",
+    "save": "ذخیره",
+    "saveTooltip": "ذخیره (Ctrl+S)"
+  },
+  "language": {
+    "fa": "فارسی",
+    "ar": "العربية",
+    "en": "English"
+  },
+  "cell": {
+    "titlePlaceholder": "عنوان سلول…",
+    "number": "سلول {{index}}",
+    "words": "کلمات",
+    "characters": "حروف",
+    "generateTitle": "ساخت عنوان با هوش مصنوعی",
+    "emptyForTitle": "متنی برای ساخت عنوان وجود ندارد."
+  },
+  "delete": {
+    "message": "با حذف {{title}}، امکان بازیابی آن وجود نخواهد داشت.",
+    "confirm": "آیا مطمئن هستید که می‌خواهید ادامه دهید؟",
+    "file": "فایل",
+    "note": "یادداشت"
+  },
+  "pdf": {
+    "generating": "در حال ساخت فایل PDF…",
+    "success": "فایل PDF با موفقیت ساخته شد.",
+    "error": "خطا در ساخت فایل PDF. دوباره تلاش کنید.",
+    "folder": "پوشه",
+    "app": "برنامه",
+    "default": "پیش‌فرض",
+    "openFileFirst": "برای ساخت PDF یک فایل را باز نمایید!",
+    "requestSent": "درخواست ساخت PDF ارسال شد، لطفاً منتظر بمانید…",
+    "openWindowError": "خطا در باز کردن پنجره ذخیره PDF"
+  },
+  "font": {
+    "title": "تنظیمات فونت",
+    "software": "نرم‌افزار",
+    "system": "سیستم",
+    "size": "اندازه"
+  },
+  "align": {
+    "tooltip": "تراز متن",
+    "right": "راست",
+    "center": "وسط",
+    "left": "چپ",
+    "justify": "توجیه"
+  },
+  "heading": {
+    "tooltip": "تیتر",
+    "normal": "معمولی",
+    "h1": "تیتر ۱",
+    "h2": "تیتر ۲",
+    "h3": "تیتر ۳",
+    "h4": "تیتر ۴"
+  },
+  "ai": {
+    "settings": "تنظیمات هوش مصنوعی",
+    "provider": "ارائه‌دهنده",
+    "model": "مدل",
+    "getApiKey": "دریافت کلید API ↗",
+    "save": "ذخیره تنظیمات",
+    "saved": "✓ ذخیره شد!",
+    "info": "کلیدهای API فقط به‌صورت محلی روی دستگاه شما ذخیره می‌شوند",
+    "closePanel": "بستن پنل هوش مصنوعی",
+    "processing": "در حال پردازش…",
+    "emptyCell": "سلول خالی است. ابتدا چیزی بنویسید.",
+    "result": "نتیجه",
+    "replace": "جایگزین کن",
+    "append": "اضافه کن",
+    "tryAgain": "دوباره امتحان",
+    "actions": {
+      "continue": "ادامه بده",
+      "rephrase": "بازنویسی",
+      "summarize": "خلاصه‌سازی",
+      "expand": "گسترش",
+      "shorten": "کوتاه‌سازی",
+      "fix_grammar": "ویرایش نگارشی",
+      "translate_en": "ترجمه به انگلیسی",
+      "translate_fa": "ترجمه به فارسی"
+    }
+  },
+  "welcome": {
+    "title": "به WordFlow خوش آمدید",
+    "subtitle": "یادداشت‌های خود را با تمرکز و سرعت بنویسید",
+    "createNote": "ایجاد یادداشت جدید",
+    "createNoteDesc": "یک فایل جدید برای شروع نوشتن بسازید",
+    "shortcutNewNote": "یادداشت جدید",
+    "shortcutSearch": "جستجو در فایل‌ها",
+    "shortcutSettings": "تنظیمات برنامه"
+  },
+  "newFile": {
+    "placeholder": "اسم فایل را وارد کنید…",
+    "create": "ایجاد"
+  },
+  "toast": {
+    "openOrCreateFile": "لطفاً یک فایل باز کنید یا فایل جدید بسازید!",
+    "fileDeleted": "فایل {{name}} با موفقیت حذف شد.",
+    "fileExists": "فایلی با این نام وجود دارد!",
+    "fileCreateError": "خطا در ایجاد فایل"
   }
 }

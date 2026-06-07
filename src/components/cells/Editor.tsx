@@ -1,5 +1,6 @@
 import { Virtuoso } from "react-virtuoso";
 import CellWrapper from "./CellWrapper";
+import CellTitleBar from "./CellTitleBar";
 import { useCellsContext } from "../contexts/cell/useCellsContext";
 import useCreatedNewCell from "../Hooks/useCreatedNewCell";
 import useFileName from "../contexts/fileName/useFileName";
@@ -21,8 +22,7 @@ import React, {
 const MemoizedCellWrapper = React.memo(CellWrapper, (prevProps, nextProps) => {
   return (
     prevProps.initialContent === nextProps.initialContent &&
-    prevProps.initialIsOpen === nextProps.initialIsOpen &&
-    prevProps.initialTitle === nextProps.initialTitle
+    prevProps.initialIsOpen === nextProps.initialIsOpen
   );
 });
 
@@ -96,27 +96,25 @@ export default function TipTap() {
       return (
         <div
           key={cell.id}
-          className="mt-1.5 pl-4 pr-10 md:pl-8 md:pr-14 animate-fade-in relative max-w-3xl mx-auto"
+          className="mt-3 px-3 sm:px-4 md:px-8 animate-fade-in relative w-full max-w-3xl xl:max-w-4xl mx-auto"
         >
-          {/* Cell Number Badge */}
-          <div
-            className="absolute right-2 md:right-4 top-2 md:top-1 flex items-center justify-center w-6 h-6 md:w-8 md:h-8 rounded-full bg-violet-100 dark:bg-violet-900/40 text-violet-600 dark:text-violet-300 text-xs md:text-sm font-bold shadow-sm border border-violet-200 dark:border-violet-700/50 z-20 select-none"
-            title={`سلول ${index + 1}`}
-          >
-            {index + 1}
-          </div>
+          <CellTitleBar
+            index={index}
+            cellId={cell.id}
+            initialTitle={cell.title || ""}
+            cellContent={cell.content}
+            onTitleUpdate={onTitleUpdate}
+          />
           <MemoizedCellWrapper
             initialContent={cell.content}
-            initialTitle={cell.title || ""}
             cellId={cell.id}
             initialIsOpen={initialIsOpen}
             onContentUpdate={onUpdate}
-            onTitleUpdate={onTitleUpdate}
           />
         </div>
       );
     },
-    [cells, handleContentUpdate],
+    [cells, handleContentUpdate, handleTitleUpdate],
   );
 
   // Footer Styel

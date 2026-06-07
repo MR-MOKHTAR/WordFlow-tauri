@@ -7,8 +7,10 @@ import useFileName from "../../contexts/fileName/useFileName";
 import useToast from "./../../../components/contexts/toast/useToast";
 import ButtonWithIcon from "../../ui/Buttons/ButtonWithIcon";
 import { invoke } from "@tauri-apps/api/core";
+import { useTranslation } from "react-i18next";
 
 export default function CreatePDF() {
+  const { t } = useTranslation();
   const { cells } = useCellsContext();
   const {} = useExportPDF();
   const { fileName } = useFileName();
@@ -18,7 +20,7 @@ export default function CreatePDF() {
     if (cells.length === 0) {
       setToast({
         type: "error",
-        message: "برای ساخت PDF یک فایل را باز نمایید!",
+        message: t("pdf.openFileFirst"),
       });
       setIsShowToast(true);
       // setTimeout(() => setIsShowToast(false), 3000);
@@ -35,7 +37,7 @@ export default function CreatePDF() {
 
       setToast({
         type: "info",
-        message: "درخواست ساخت PDF ارسال شد، لطفاً منتظر بمانید...",
+        message: t("pdf.requestSent"),
         duration: 4000,
       });
       setIsShowToast(true);
@@ -43,15 +45,15 @@ export default function CreatePDF() {
       console.error("PDF export error:", err);
       setToast({
         type: "error",
-        message: "خطا در باز کردن پنجره ذخیره PDF",
+        message: t("pdf.openWindowError"),
       });
       setIsShowToast(true);
       // setTimeout(() => setIsShowToast(false), 3000);
     }
-  }, [cells, fileName, setToast, setIsShowToast]);
+  }, [cells, fileName, setToast, setIsShowToast, t]);
 
   return (
-    <Tooltip content="Export PDF">
+    <Tooltip content={t("header.exportPdf")}>
       <ButtonWithIcon
         btnSize="sm"
         onClick={exportHandler}

@@ -1,4 +1,6 @@
 import { useState, useCallback } from "react";
+import { useTranslation } from "react-i18next";
+import { MenuItem, Select, type SelectChangeEvent } from "@mui/material";
 import MyModal from "../ui/MyModal";
 import { AI_PROVIDERS } from "../../services/ai/providers";
 import {
@@ -9,6 +11,7 @@ import {
 import { useAIModal } from "../contexts/AIModal/AIModalContext";
 
 export default function AISettingsModal() {
+  const { t } = useTranslation();
   const { setOpenAISettingsModal } = useAIModal();
   const [settings, setSettings] = useState<AISettings>(loadAISettings);
   const [saved, setSaved] = useState(false);
@@ -17,7 +20,7 @@ export default function AISettingsModal() {
     AI_PROVIDERS.find((p) => p.id === settings.providerId) ?? AI_PROVIDERS[0];
 
   const handleProviderChange = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
+    (e: SelectChangeEvent<string>) => {
       const newProvider =
         AI_PROVIDERS.find((p) => p.id === e.target.value) ?? AI_PROVIDERS[0];
       setSettings({
@@ -31,7 +34,7 @@ export default function AISettingsModal() {
   );
 
   const handleModelChange = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
+    (e: SelectChangeEvent<string>) => {
       setSettings((prev) => ({ ...prev, modelId: e.target.value }));
       setSaved(false);
     },
@@ -57,9 +60,24 @@ export default function AISettingsModal() {
     [setOpenAISettingsModal],
   );
 
+  // Native <select> renders with the OS theme inside Tauri's WebKitGTK webview,
+  // so we use MUI Select (JS-rendered popup) to keep the app's dark theme.
+  const muiSelectClass =
+    "rounded-lg bg-white dark:bg-[#1e1f29] text-sm " +
+    "[&_.MuiSelect-select]:py-2 [&_.MuiSelect-select]:text-gray-800 dark:[&_.MuiSelect-select]:text-gray-200! " +
+    "[&_.MuiOutlinedInput-notchedOutline]:border-gray-200! dark:[&_.MuiOutlinedInput-notchedOutline]:border-gray-600! " +
+    "[&_.MuiSvgIcon-root]:text-gray-400";
+
+  const menuProps = {
+    classes: {
+      paper:
+        "bg-white! dark:bg-context-dark! text-gray-800! dark:text-CellHeader-dark!",
+    },
+  };
+
   const selectClass =
     "w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-600 " +
-    "bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 " +
+    "bg-white dark:bg-[#1e1f29] text-gray-800 dark:text-gray-200 " +
     "text-sm focus:outline-none focus:ring-2 focus:ring-violet-400 transition-all";
 
   return (
@@ -69,44 +87,58 @@ export default function AISettingsModal() {
         <div className="flex items-center gap-2">
           <span className="text-xl">🤖</span>
           <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
-            AI Settings
+            {t("ai.settings")}
           </h2>
         </div>
 
         {/* Provider */}
         <div className="space-y-1.5">
           <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-            Provider
+            {t("ai.provider")}
           </label>
-          <select
+          <Select
             value={settings.providerId}
             onChange={handleProviderChange}
-            className={selectClass}
+            size="small"
+            fullWidth
+            MenuProps={menuProps}
+            className={muiSelectClass}
           >
             {AI_PROVIDERS.map((p) => (
-              <option key={p.id} value={p.id}>
+              <MenuItem
+                key={p.id}
+                value={p.id}
+                className="text-sm dark:text-gray-200! dark:hover:bg-hover-dark!"
+              >
                 {p.name}
-              </option>
+              </MenuItem>
             ))}
-          </select>
+          </Select>
         </div>
 
         {/* Model */}
         <div className="space-y-1.5">
           <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-            Model
+            {t("ai.model")}
           </label>
-          <select
+          <Select
             value={settings.modelId}
             onChange={handleModelChange}
-            className={selectClass}
+            size="small"
+            fullWidth
+            MenuProps={menuProps}
+            className={muiSelectClass}
           >
             {selectedProvider.models.map((m) => (
-              <option key={m.id} value={m.id}>
+              <MenuItem
+                key={m.id}
+                value={m.id}
+                className="text-sm dark:text-gray-200! dark:hover:bg-hover-dark!"
+              >
                 {m.name}
-              </option>
+              </MenuItem>
             ))}
-          </select>
+          </Select>
         </div>
 
         {/* API Key */}
@@ -121,7 +153,7 @@ export default function AISettingsModal() {
               rel="noreferrer"
               className="text-xs text-violet-500 hover:text-violet-600 dark:text-violet-400 dark:hover:text-violet-300 transition-colors"
             >
-              Get API Key ↗
+              {t("ai.getApiKey")}
             </a>
           </div>
           <input
@@ -143,12 +175,12 @@ export default function AISettingsModal() {
               : "bg-violet-600 hover:bg-violet-700 text-white active:scale-95")
           }
         >
-          {saved ? "✓ Saved!" : "Save Settings"}
+          {saved ? t("ai.saved") : t("ai.save")}
         </button>
 
         {/* Info */}
         <p className="text-xs text-gray-400 dark:text-gray-500 text-center">
-          API keys are stored locally on your device only
+          {t("ai.info")}
         </p>
       </div>
     </MyModal>

@@ -14,7 +14,8 @@ export type AIAction =
   | "shorten"
   | "fix_grammar"
   | "translate_en"
-  | "translate_fa";
+  | "translate_fa"
+  | "generate_title";
 
 export const AI_ACTIONS: { id: AIAction; label: string; labelFa: string }[] = [
   { id: "continue", label: "Continue", labelFa: "ادامه بده" },
@@ -44,6 +45,8 @@ const SYSTEM_PROMPTS: Record<AIAction, string> = {
     "You are a professional translator. Translate the given text to English. Output only the translation.",
   translate_fa:
     "You are a professional translator. Translate the given text to Persian (Farsi). Output only the translation.",
+  generate_title:
+    "You are a writing assistant. Generate one short, descriptive title (at most 6 words) for the given text, written in the same language as the text. Output only the title itself — no quotation marks, no trailing punctuation, and no explanation.",
 };
 
 // ─── OpenAI-compatible (OpenRouter, Groq, OpenAI) ───────────────────────────
@@ -171,6 +174,20 @@ export async function runAIAction(
         text,
       );
   }
+}
+
+// ─── Title generation helper ─────────────────────────────────────────────────
+export async function generateTitle(
+  config: AIConfig,
+  text: string,
+): Promise<string> {
+  const raw = await runAIAction(config, "generate_title", text);
+  // Strip surrounding quotes / trailing punctuation and keep it to one line.
+  return raw
+    .split("\n")[0]
+    .trim()
+    .replace(/^["'«»‟“”]+|["'«»‟“”.،,]+$/g, "")
+    .trim();
 }
 
 // ─── Settings stored in localStorage ────────────────────────────────────────

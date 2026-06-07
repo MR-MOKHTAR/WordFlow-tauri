@@ -3,22 +3,25 @@ import { RiHeading } from "react-icons/ri";
 import Tooltip from "../ui/Tooltip";
 import { memo, MouseEvent, useCallback, useState } from "react";
 import { Menu, MenuItem } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import ButtonWithIcon from "../ui/Buttons/ButtonWithIcon";
+import { isRTL } from "../i18next/i18n";
 
 type HeadingType = {
   level: 0 | 1 | 2 | 3 | 4;
   type: "paragraph" | "heading";
-  label: string;
+  labelKey: string;
 };
 const headingLevels: HeadingType[] = [
-  { label: "Normal", type: "paragraph", level: 0 },
-  { label: "Heading 1", type: "heading", level: 1 },
-  { label: "Heading 2", type: "heading", level: 2 },
-  { label: "Heading 3", type: "heading", level: 3 },
-  { label: "Heading 4", type: "heading", level: 4 },
+  { labelKey: "heading.normal", type: "paragraph", level: 0 },
+  { labelKey: "heading.h1", type: "heading", level: 1 },
+  { labelKey: "heading.h2", type: "heading", level: 2 },
+  { labelKey: "heading.h3", type: "heading", level: 3 },
+  { labelKey: "heading.h4", type: "heading", level: 4 },
 ];
 
 function Heading({ editor }: { editor: Editor | null }) {
+  const { t, i18n } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -47,7 +50,7 @@ function Heading({ editor }: { editor: Editor | null }) {
 
   return (
     <div>
-      <Tooltip content="Heading" position="bottom-end" delay={700}>
+      <Tooltip content={t("heading.tooltip")} position="bottom-end" delay={700}>
         <ButtonWithIcon
           icon={<RiHeading size={16} />}
           onClick={handleClick}
@@ -61,7 +64,7 @@ function Heading({ editor }: { editor: Editor | null }) {
         anchorEl={anchorEl} // این لازمه که منو کنار دکمه باز شه
         open={open}
         onClose={handleClose}
-        dir="ltr"
+        dir={isRTL(i18n.language) ? "rtl" : "ltr"}
         className="dark:[.MuiMenu-paper]:bg-context-dark!"
         classes={{
           paper: "dark:bg-context-dark! dark:text-CellHeader-dark!",
@@ -73,7 +76,7 @@ function Heading({ editor }: { editor: Editor | null }) {
             onClick={() => handleSetHeading(item)}
             className="dark:hover:bg-hover-dark!"
           >
-            {item.label}
+            {t(item.labelKey)}
           </MenuItem>
         ))}
       </Menu>

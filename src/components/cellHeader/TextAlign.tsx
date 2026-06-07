@@ -7,23 +7,26 @@ import {
   RiAlignLeft,
   RiAlignJustify,
 } from "react-icons/ri";
+import { useTranslation } from "react-i18next";
 import Tooltip from "../ui/Tooltip";
 import ButtonWithIcon from "../ui/Buttons/ButtonWithIcon";
+import { isRTL } from "../i18next/i18n";
 
 type AlignOption = {
-  label: string;
+  labelKey: string;
   value: "right" | "center" | "left" | "justify";
   icon: React.ReactNode;
 };
 
 const alignOptions: AlignOption[] = [
-  { label: "راست", value: "right", icon: <RiAlignRight size={16} /> },
-  { label: "وسط", value: "center", icon: <RiAlignCenter size={16} /> },
-  { label: "چپ", value: "left", icon: <RiAlignLeft size={16} /> },
-  { label: "توجیه", value: "justify", icon: <RiAlignJustify size={16} /> },
+  { labelKey: "align.right", value: "right", icon: <RiAlignRight size={16} /> },
+  { labelKey: "align.center", value: "center", icon: <RiAlignCenter size={16} /> },
+  { labelKey: "align.left", value: "left", icon: <RiAlignLeft size={16} /> },
+  { labelKey: "align.justify", value: "justify", icon: <RiAlignJustify size={16} /> },
 ];
 
 function TextAlign({ editor }: { editor: Editor | null }) {
+  const { t, i18n } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -56,7 +59,7 @@ function TextAlign({ editor }: { editor: Editor | null }) {
 
   return (
     <div>
-      <Tooltip content="تراز متن" position="bottom-end" delay={700}>
+      <Tooltip content={t("align.tooltip")} position="bottom-end" delay={700}>
         <ButtonWithIcon
           icon={currentIcon}
           onClick={handleClick}
@@ -69,7 +72,7 @@ function TextAlign({ editor }: { editor: Editor | null }) {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        dir="rtl"
+        dir={isRTL(i18n.language) ? "rtl" : "ltr"}
         classes={{
           paper: "dark:bg-context-dark! dark:text-CellHeader-dark!",
         }}
@@ -83,7 +86,7 @@ function TextAlign({ editor }: { editor: Editor | null }) {
           >
             <span className="flex items-center gap-2 text-sm">
               {opt.icon}
-              {opt.label}
+              {t(opt.labelKey)}
             </span>
           </MenuItem>
         ))}

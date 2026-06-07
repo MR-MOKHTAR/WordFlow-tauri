@@ -1,5 +1,6 @@
 import { useState, useCallback, memo } from "react";
 import { type Editor } from "@tiptap/react";
+import { useTranslation } from "react-i18next";
 import {
   AI_ACTIONS,
   runAIAction,
@@ -19,6 +20,7 @@ type AIPanelProps = {
 };
 
 function AIPanel({ editor, onClose }: AIPanelProps) {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -31,7 +33,7 @@ function AIPanel({ editor, onClose }: AIPanelProps) {
       // Get plain text from the editor
       const text = editor.getText();
       if (!text.trim()) {
-        setError("The cell is empty. Write something first.");
+        setError(t("ai.emptyCell"));
         return;
       }
 
@@ -51,7 +53,7 @@ function AIPanel({ editor, onClose }: AIPanelProps) {
         setLoading(false);
       }
     },
-    [editor],
+    [editor, t],
   );
 
   const simpleMarkdownToHtml = (text: string) => {
@@ -81,13 +83,13 @@ function AIPanel({ editor, onClose }: AIPanelProps) {
   }, []);
 
   return (
-    <div className="relative border-t border-gray-200 dark:border-gray-700 bg-cell-light dark:bg-cell-dark rounded-b-lg">
+    <div className="relative border-t border-border-light dark:border-border-dark bg-cell-light dark:bg-cell-dark rounded-b-lg">
       {/* Universal Close Button */}
       <button
         onClick={onClose}
         className="absolute top-2.5 left-2.5 p-1.5 rounded-lg text-gray-400 hover:text-red-500 dark:hover:text-red-400
           hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-200 cursor-pointer z-20 group"
-        title="بستن پنل هوش مصنوعی"
+        title={t("ai.closePanel")}
       >
         <MdClose size={18} className="group-active:scale-90 transition-transform" />
       </button>
@@ -108,7 +110,7 @@ function AIPanel({ editor, onClose }: AIPanelProps) {
                 hover:border-violet-300 dark:hover:border-violet-600 hover:text-violet-700 dark:hover:text-violet-300
                 transition-all duration-150 active:scale-95 cursor-pointer"
             >
-              {a.labelFa}
+              {t(`ai.actions.${a.id}`)}
             </button>
           ))}
         </div>
@@ -119,7 +121,7 @@ function AIPanel({ editor, onClose }: AIPanelProps) {
         <div className="flex items-center gap-2.5 pl-12 pr-4 py-3">
           <ImSpinner8 size={14} className="animate-spin text-violet-500" />
           <span className="text-sm text-gray-500 dark:text-gray-400">
-            در حال پردازش...
+            {t("ai.processing")}
           </span>
         </div>
       )}
@@ -136,7 +138,7 @@ function AIPanel({ editor, onClose }: AIPanelProps) {
               className="px-3 py-1.5 text-xs rounded-md bg-gray-100 dark:bg-gray-700
                 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all cursor-pointer"
             >
-              تلاش مجدد
+              {t("common.retry")}
             </button>
           </div>
         </div>
@@ -148,7 +150,7 @@ function AIPanel({ editor, onClose }: AIPanelProps) {
           <div className="flex items-center gap-1.5 mb-1">
             <MdCheckCircleOutline size={14} className="text-green-500" />
             <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
-              {AI_ACTIONS.find((a) => a.id === activeAction)?.labelFa} — نتیجه
+              {activeAction && t(`ai.actions.${activeAction}`)} — {t("ai.result")}
             </span>
           </div>
 
@@ -169,7 +171,7 @@ function AIPanel({ editor, onClose }: AIPanelProps) {
               className="px-3 py-1.5 text-xs rounded-md bg-violet-600 hover:bg-violet-700
                 text-white font-medium transition-all active:scale-95 cursor-pointer"
             >
-              جایگزین کن
+              {t("ai.replace")}
             </button>
             {activeAction === "continue" && (
               <button
@@ -177,7 +179,7 @@ function AIPanel({ editor, onClose }: AIPanelProps) {
                 className="px-3 py-1.5 text-xs rounded-md bg-green-600 hover:bg-green-700
                   text-white font-medium transition-all active:scale-95 cursor-pointer"
               >
-                اضافه کن
+                {t("ai.append")}
               </button>
             )}
             <button
@@ -185,7 +187,7 @@ function AIPanel({ editor, onClose }: AIPanelProps) {
               className="px-3 py-1.5 text-xs rounded-md border border-gray-200 dark:border-gray-600
                 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all cursor-pointer"
             >
-              دوباره امتحان
+              {t("ai.tryAgain")}
             </button>
           </div>
         </div>

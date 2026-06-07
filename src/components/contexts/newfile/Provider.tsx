@@ -2,14 +2,12 @@ import { memo, ReactNode, useCallback, useMemo, useState } from "react";
 import { NewFileContext } from "../contexts";
 
 import useFileName from "../fileName/useFileName";
-import useCreatedNewCell from "../../Hooks/useCreatedNewCell";
 import useFilesContext from "../FilesContext/useFilesContext";
-import createNewFile from "../../../services/tauri/createNewFile";
+import { createNote } from "../../../services/db/notesRepo";
+import i18n from "../../i18next/i18n";
 
 function NewFileProvider({ children }: { children: ReactNode }) {
-  const createFile = createNewFile();
   const { setFileName } = useFileName();
-  const createdNewCell = useCreatedNewCell();
   const { openFileWithFetch } = useFilesContext();
 
   const [openNewFileModal, setOpenNewFileModal] = useState(false);
@@ -17,22 +15,20 @@ function NewFileProvider({ children }: { children: ReactNode }) {
 
   const onCreate = useCallback(
     async (fileName: string) => {
-      const fullName = fileName.endsWith(".json")
-        ? fileName
-        : `${fileName}.json`;
+      const name = fileName.trim().replace(/\.json$/i, "");
+      if (!name) return;
 
-      const result = await createFile(fullName);
+      const result = await createNote(name);
       if (!result.success) {
-        alert(result.error ?? "خطا در ایجاد فایل");
+        alert(result.error ?? i18n.t("toast.fileCreateError"));
         return;
       }
 
-      openFileWithFetch(fullName);
-      setFileName(fullName);
-      createdNewCell();
+      setFileName(name);
+      await openFileWithFetch(name);
       setOpenNewFileModal(false);
     },
-    [createFile, setFileName, createdNewCell, openFileWithFetch]
+    [setFileName, openFileWithFetch]
   );
 
   const contextValue = useMemo(

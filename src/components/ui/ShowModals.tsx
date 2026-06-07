@@ -6,6 +6,7 @@ import useRemoveCell from "../contexts/cell/useRemoveCell";
 import { useCellsContext } from "../contexts/cell/useCellsContext";
 import useSaveFile from "../SaveFile/useSaveFile";
 import React, { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import useExportPDF from "../contexts/ExportPDFModal/useExportPDF";
 import ExportPDFModal from "../contexts/ExportPDFModal/ExportPDFModal";
 import NewFileModal from "./NewFileModal";
@@ -15,6 +16,7 @@ import { useAIModal } from "../contexts/AIModal/AIModalContext";
 import AISettingsModal from "../AI/AISettingsModal";
 
 function ShowModals() {
+  const { t } = useTranslation();
   const { openFontModal } = useFont();
   const {
     openDeleteFileModal,
@@ -55,7 +57,7 @@ function ShowModals() {
       {openFontModal && <FontModal />}
       {openDeleteFileModal && (
         <DeleteModal
-          title="فایل"
+          title={t("delete.file")}
           onClose={closeFileModal}
           onConfirm={() => {
             if (selectedFile) removeFileHandler(selectedFile);
@@ -64,7 +66,7 @@ function ShowModals() {
       )}
       {openRemoveCellModal && (
         <DeleteModal
-          title="یادداشت"
+          title={t("delete.note")}
           onClose={() => setOpenRemoveCellModal(false)}
           onConfirm={() => {
             if (CellID) removeCellHandler(CellID);

@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState, useEffect, memo, useMemo } from "react";
 import { CellType, FilesContextType, FileState } from "../../Types";
 import { FilesContext } from "../contexts";
-import getFileData from "../../../services/tauri/getFileData";
+import { loadCells } from "../../../services/db/notesRepo";
 
 function FilesProvider({ children }: { children: React.ReactNode }) {
   const [files, setFiles] = useState<Record<string, FileState>>({});
@@ -49,7 +49,7 @@ function FilesProvider({ children }: { children: React.ReactNode }) {
         return;
       }
 
-      const res = await getFileData<CellType[]>(name);
+      const res = await loadCells(name);
       const cells: CellType[] =
         res?.data && res.data.length > 0
           ? res.data

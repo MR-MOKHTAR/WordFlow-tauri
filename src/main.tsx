@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import "./components/i18next/i18n";
 import App from "./App";
 import FilesProvider from "./components/contexts/FilesContext/FilesContext.tsx";
 import FontProvider from "./components/contexts/FontModal/Provider.tsx";

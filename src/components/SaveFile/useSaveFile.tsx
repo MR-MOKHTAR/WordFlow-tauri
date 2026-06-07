@@ -1,7 +1,8 @@
 import { useCallback, useRef } from "react";
 import { CellType } from "../Types";
 import useFilesContext from "../contexts/FilesContext/useFilesContext";
-import saveJsonFile from "../../services/tauri/saveJsonFile";
+import { saveCells } from "../../services/db/notesRepo";
+import { flushCells } from "../cells/editorRegistry";
 
 type Mode = "instant" | "debounce" | "throttle";
 
@@ -16,58 +17,60 @@ export default function useSaveFile({
   debounceDelay = 1000,
   throttleDelay = 5000,
 }: SaveFileOptions = {}) {
-  const { files, updateFileMeta } = useFilesContext();
+  const { files, updateFileMeta, updateCells } = useFilesContext();
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastRunRef = useRef<number>(0);
 
-  // همیشه آخرین نسخه files و updateFileMeta را نگه می‌داریم
-  // تا saveAction از stale closure رنج نبرد
+  // همیشه آخرین نسخه‌ها را در ref نگه می‌داریم تا saveAction از stale closure رنج نبرد
   const filesRef = useRef(files);
   const updateFileMetaRef = useRef(updateFileMeta);
+  const updateCellsRef = useRef(updateCells);
   filesRef.current = files;
   updateFileMetaRef.current = updateFileMeta;
+  updateCellsRef.current = updateCells;
 
-  const saveAction = useCallback(
-    async (fileName: string) => {
-      // استفاده از ref به جای closure تا همیشه آخرین مقدار خوانده شود
-      const file = filesRef.current[fileName];
-      if (!file) return;
+  const saveAction = useCallback(async (fileName: string) => {
+    const file = filesRef.current[fileName];
+    if (!file) return;
 
-      const content: CellType[] = file.cells || [];
+    // محتوای زنده‌ی هر سلولِ روی صفحه را قبل از ذخیره flush می‌کنیم
+    // (رفع باگ «بار اول ذخیره نمی‌کند» چون state با debounce به‌روز می‌شد).
+    const cells: CellType[] = flushCells(file.cells || []);
 
-      try {
-        const res = await saveJsonFile(fileName, content);
+    try {
+      const res = await saveCells(fileName, cells);
+      if (!res?.success) throw new Error(res?.error || "ذخیره ناموفق بود");
 
-        if (!res?.success) throw new Error(res?.error || "ذخیره ناموفق بود");
+      // state را با مقدار قطعیِ ذخیره‌شده هماهنگ و فایل را تمیز می‌کنیم
+      updateCellsRef.current(fileName, cells);
+      updateFileMetaRef.current(fileName, { isDirty: false });
+    } catch (err) {
+      console.error("خطا در ذخیره فایل:", err);
+    }
+  }, []);
 
-        console.log(`[${mode}] فایل ${fileName} ذخیره شد`);
-        updateFileMetaRef.current(fileName, { isDirty: false }); // ✅ بعد از ذخیره موفق
-      } catch (err) {
-        console.error("خطا در ذخیره فایل:", err);
-      }
-    },
-    [mode] // دیگر به files و updateFileMeta وابسته نیست چون از ref می‌خواند
-  );
-
-  // این تابع رو برمی‌گردونیم که بشه روی هر فایل صدا زد
+  // تابعی برمی‌گردانیم که روی هر فایل قابل صدا زدن است و promise را برمی‌گرداند
   return useCallback(
-    (fileName: string) => {
+    (fileName: string): Promise<void> => {
       const now = Date.now();
 
       if (mode === "instant") {
-        saveAction(fileName);
+        return saveAction(fileName);
       } else if (mode === "debounce") {
         if (timerRef.current) clearTimeout(timerRef.current);
         timerRef.current = setTimeout(() => {
           saveAction(fileName);
         }, debounceDelay);
-      } else if (mode === "throttle") {
+        return Promise.resolve();
+      } else {
+        // throttle
         if (now - lastRunRef.current >= throttleDelay) {
           lastRunRef.current = now;
-          saveAction(fileName);
+          return saveAction(fileName);
         }
+        return Promise.resolve();
       }
     },
-    [mode, debounceDelay, throttleDelay, saveAction]
+    [mode, debounceDelay, throttleDelay, saveAction],
   );
 }

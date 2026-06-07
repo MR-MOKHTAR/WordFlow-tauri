@@ -43,6 +43,9 @@
     ]
   },
   "plugins": {
-    "fs": {}
+    "fs": {},
+    "sql": {
+      "preload": ["sqlite:wordflow.db"]
+    }
   }
 }

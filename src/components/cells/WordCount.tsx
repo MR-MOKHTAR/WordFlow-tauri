@@ -1,8 +1,10 @@
 import { Editor, useEditorState } from "@tiptap/react";
 import { memo } from "react";
+import { useTranslation } from "react-i18next";
 import { formatNumber } from "../../Utils/numberUtils";
 
 function WordCount({ editor }: { editor: Editor }) {
+  const { t } = useTranslation();
   const state = useEditorState({
     editor,
     selector: (context) => {
@@ -25,13 +27,17 @@ function WordCount({ editor }: { editor: Editor }) {
 
   return (
     <div
-      className={`absolute font-Amiri bottom-0 left-3 flex items-center gap-x-1 text-xs 
+      className={`absolute font-Amiri bottom-0 end-3 flex items-center gap-x-1 text-xs
         text-neutral-600 dark:text-neutral-300
         transition-opacity ${editor?.isFocused ? "opacity-95" : "opacity-40"}`}
     >
-      <span>کلمات: {formatNumber(totalWords)}</span>
+      <span>
+        {t("cell.words")}: {formatNumber(totalWords)}
+      </span>
       <span className="mx-1">|</span>
-      <span>حروف: {formatNumber(totalCharacters)}</span>
+      <span>
+        {t("cell.characters")}: {formatNumber(totalCharacters)}
+      </span>
     </div>
   );
 }

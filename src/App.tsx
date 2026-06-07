@@ -8,10 +8,16 @@ import ShowModals from "./components/ui/ShowModals";
 import MyToast from "./components/ui/MyToast";
 import useSaveFile from "./components/SaveFile/useSaveFile";
 import { getCurrentWindow } from "@tauri-apps/api/window";
+import { useTranslation } from "react-i18next";
+import useSyncHtmlDir from "./components/Hooks/useSyncHtmlDir";
 
 function App() {
   const { fileName } = useFileName();
   const saveFile = useSaveFile({ mode: "instant" });
+  const { i18n } = useTranslation();
+  useSyncHtmlDir();
+
+  const isLatin = (i18n.language || "fa").split("-")[0] === "en";
 
   useEffect(() => {
     let isClosing = false;
@@ -41,7 +47,11 @@ function App() {
   // }, []);
 
   return (
-    <div className={`relative h-screen flex flex-col font-Shabnam`}>
+    <div
+      className={`relative h-screen flex flex-col ${
+        isLatin ? "font-latin" : "font-Shabnam"
+      }`}
+    >
       <Header />
       <div className="h-10" />
       <div className="flex flex-1 min-h-0 ">

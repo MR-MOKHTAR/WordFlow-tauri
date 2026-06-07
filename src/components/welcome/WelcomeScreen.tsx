@@ -1,6 +1,7 @@
 import { useCallback, useState, useEffect } from "react";
 import { FiPlus, FiSettings, FiSearch, FiFileText } from "react-icons/fi";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import useNewFile from "../contexts/newfile/useNewFile";
 
 // یک بک‌گراند نقطه‌ای و حرفه‌ای برای داشبورد
@@ -15,6 +16,7 @@ const GridBackground = () => (
 );
 
 export default function WelcomeScreen() {
+  const { t } = useTranslation();
   const { setOpenNewFileModal } = useNewFile();
 
   const handleNewNote = useCallback(() => {
@@ -30,7 +32,7 @@ export default function WelcomeScreen() {
   }, []);
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center w-full h-full text-header-light dark:text-header-dark bg-canvas-light dark:bg-canvas-dark overflow-hidden relative selection:bg-primary-light/30 font-Shabnam">
+    <div className="flex-1 flex flex-col items-center justify-center w-full h-full text-header-light dark:text-header-dark bg-canvas-light dark:bg-canvas-dark overflow-hidden relative selection:bg-primary-light/30">
       
       <GridBackground />
 
@@ -54,8 +56,8 @@ export default function WelcomeScreen() {
           >
             <FiFileText className="w-8 h-8" />
           </motion.div>
-          <h1 className="text-3xl font-bold tracking-tight">به WordFlow خوش آمدید</h1>
-          <p className="text-gray-500 dark:text-gray-400 text-lg">یادداشت‌های خود را با تمرکز و سرعت بنویسید</p>
+          <h1 className="text-3xl font-bold tracking-tight">{t("welcome.title")}</h1>
+          <p className="text-gray-500 dark:text-gray-400 text-lg">{t("welcome.subtitle")}</p>
         </div>
 
         {/* دکمه ایجاد نوت جدید (به شکل یک کارت) */}
@@ -74,8 +76,8 @@ export default function WelcomeScreen() {
             <FiPlus className="w-6 h-6" />
           </div>
           <div className="text-center">
-            <span className="block text-lg font-semibold text-gray-800 dark:text-gray-100 mb-1">ایجاد یادداشت جدید</span>
-            <span className="text-sm text-gray-500 dark:text-gray-400">یک فایل جدید برای شروع نوشتن بسازید</span>
+            <span className="block text-lg font-semibold text-gray-800 dark:text-gray-100 mb-1">{t("welcome.createNote")}</span>
+            <span className="text-sm text-gray-500 dark:text-gray-400">{t("welcome.createNoteDesc")}</span>
           </div>
         </motion.button>
 
@@ -86,9 +88,9 @@ export default function WelcomeScreen() {
           transition={{ delay: 0.4, duration: 0.5 }}
           className="w-full max-w-md bg-white/50 dark:bg-black/20 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl p-4 flex flex-col gap-2"
         >
-          <ShortcutItem icon={<FiPlus />} label="یادداشت جدید" shortcut={`${os} + N`} />
-          <ShortcutItem icon={<FiSearch />} label="جستجو در فایل‌ها" shortcut={`${os} + F`} />
-          <ShortcutItem icon={<FiSettings />} label="تنظیمات برنامه" shortcut={`${os} + ,`} />
+          <ShortcutItem icon={<FiPlus />} label={t("welcome.shortcutNewNote")} shortcut={`${os} + N`} />
+          <ShortcutItem icon={<FiSearch />} label={t("welcome.shortcutSearch")} shortcut={`${os} + F`} />
+          <ShortcutItem icon={<FiSettings />} label={t("welcome.shortcutSettings")} shortcut={`${os} + ,`} />
         </motion.div>
       </motion.div>
     </div>

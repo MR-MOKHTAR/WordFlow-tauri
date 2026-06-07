@@ -17,7 +17,7 @@ function SideBar() {
         isOpenSideBar ? "w-64" : "w-12 items-center"
       }`}
     >
-      <div className="flex-between py-1 border-b border-gray-200 dark:border-[#2a2a3e]">
+      <div className="flex-between py-1 border-b border-border-light dark:border-border-dark">
         {isOpenSideBar && <AddNewFile />}
         <ToggleSideBar setIsOpenSideBar={setIsOpenSideBar} />
       </div>

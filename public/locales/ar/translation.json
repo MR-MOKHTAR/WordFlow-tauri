@@ -1,8 +1,116 @@
 {
-  "welcome": "اهلا و مرحبا بکم!",
-  "download": "تحمیل",
-  "editor": {
-    "word_count": "عدد الکلمات",
-    "character_count": "عدد الحروف"
+  "common": {
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "retry": "إعادة المحاولة",
+    "save": "حفظ",
+    "warning": "تنبيه!"
+  },
+  "header": {
+    "newNote": "ملاحظة جديدة (Ctrl+N)",
+    "theme": "تبديل السمة",
+    "language": "اللغة",
+    "fontSettings": "إعدادات الخط",
+    "aiSettings": "إعدادات الذكاء الاصطناعي",
+    "aiAssistant": "مساعد الذكاء الاصطناعي",
+    "exportPdf": "تصدير PDF",
+    "save": "حفظ",
+    "saveTooltip": "حفظ (Ctrl+S)"
+  },
+  "language": {
+    "fa": "فارسی",
+    "ar": "العربية",
+    "en": "English"
+  },
+  "cell": {
+    "titlePlaceholder": "عنوان الخلية…",
+    "number": "خلية {{index}}",
+    "words": "الكلمات",
+    "characters": "الأحرف",
+    "generateTitle": "إنشاء عنوان بالذكاء الاصطناعي",
+    "emptyForTitle": "لا يوجد نص لإنشاء عنوان منه."
+  },
+  "delete": {
+    "message": "لا يمكن التراجع عن حذف {{title}}.",
+    "confirm": "هل أنت متأكد أنك تريد المتابعة؟",
+    "file": "ملف",
+    "note": "ملاحظة"
+  },
+  "pdf": {
+    "generating": "جارٍ إنشاء ملف PDF…",
+    "success": "تم إنشاء ملف PDF بنجاح.",
+    "error": "فشل إنشاء ملف PDF. حاول مرة أخرى.",
+    "folder": "المجلد",
+    "app": "التطبيق",
+    "default": "افتراضي",
+    "openFileFirst": "افتح ملفًا أولاً لتصدير PDF!",
+    "requestSent": "تم إرسال طلب تصدير PDF، يرجى الانتظار…",
+    "openWindowError": "فشل فتح نافذة حفظ PDF"
+  },
+  "font": {
+    "title": "إعدادات الخط",
+    "software": "البرنامج",
+    "system": "النظام",
+    "size": "الحجم"
+  },
+  "align": {
+    "tooltip": "محاذاة النص",
+    "right": "يمين",
+    "center": "وسط",
+    "left": "يسار",
+    "justify": "ضبط"
+  },
+  "heading": {
+    "tooltip": "عنوان",
+    "normal": "عادي",
+    "h1": "عنوان ١",
+    "h2": "عنوان ٢",
+    "h3": "عنوان ٣",
+    "h4": "عنوان ٤"
+  },
+  "ai": {
+    "settings": "إعدادات الذكاء الاصطناعي",
+    "provider": "المزوّد",
+    "model": "النموذج",
+    "getApiKey": "الحصول على مفتاح API ↗",
+    "save": "حفظ الإعدادات",
+    "saved": "✓ تم الحفظ!",
+    "info": "يتم تخزين مفاتيح API محليًا على جهازك فقط",
+    "closePanel": "إغلاق لوحة الذكاء الاصطناعي",
+    "processing": "جارٍ المعالجة…",
+    "emptyCell": "الخلية فارغة. اكتب شيئًا أولاً.",
+    "result": "النتيجة",
+    "replace": "استبدال",
+    "append": "إضافة",
+    "tryAgain": "حاول مرة أخرى",
+    "actions": {
+      "continue": "أكمل",
+      "rephrase": "إعادة الصياغة",
+      "summarize": "تلخيص",
+      "expand": "توسيع",
+      "shorten": "اختصار",
+      "fix_grammar": "تصحيح الإملاء",
+      "translate_en": "ترجمة → EN",
+      "translate_fa": "ترجمة → FA"
+    }
+  },
+  "welcome": {
+    "title": "مرحبًا بك في WordFlow",
+    "subtitle": "اكتب ملاحظاتك بتركيز وسرعة",
+    "createNote": "إنشاء ملاحظة جديدة",
+    "createNoteDesc": "أنشئ ملفًا جديدًا لبدء الكتابة",
+    "shortcutNewNote": "ملاحظة جديدة",
+    "shortcutSearch": "البحث في الملفات",
+    "shortcutSettings": "إعدادات التطبيق"
+  },
+  "newFile": {
+    "placeholder": "أدخل اسم الملف…",
+    "create": "إنشاء"
+  },
+  "toast": {
+    "openOrCreateFile": "يرجى فتح ملف أو إنشاء ملف جديد!",
+    "fileDeleted": "تم حذف الملف {{name}} بنجاح.",
+    "fileExists": "يوجد ملف بهذا الاسم بالفعل!",
+    "fileCreateError": "فشل إنشاء الملف"
   }
 }

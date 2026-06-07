@@ -1,6 +1,8 @@
 import { EditorContent, type Editor } from "@tiptap/react";
 import { memo, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import useFont from "../contexts/FontModal/useFont";
+import { isRTL } from "../i18next/i18n";
 
 type TiptapCellEditorProps = {
   content: string;
@@ -9,6 +11,8 @@ type TiptapCellEditorProps = {
 
 function TiptapCellEditor({ content, editor }: TiptapCellEditorProps) {
   const { fontSize, fontFamily } = useFont();
+  const { i18n } = useTranslation();
+  const dir = isRTL(i18n.language) ? "rtl" : "ltr";
 
   // فقط وقتی content واقعی تغییر کند، editor آپدیت می‌شود
   useEffect(() => {
@@ -31,7 +35,10 @@ function TiptapCellEditor({ content, editor }: TiptapCellEditorProps) {
     <div className="flex flex-col h-full cursor-text" onClick={() => editor?.chain().focus().run()}>
       <EditorContent
         editor={editor}
-        className="py-4 px-5 min-h-[35px] text-justify tracking-normal whitespace-pre-wrap caret-cyan-700 text-CellHeader-light dark:text-CellHeader-dark"
+        dir={dir}
+        className={`py-4 px-5 min-h-[35px] tracking-normal whitespace-pre-wrap caret-cyan-700 text-CellHeader-light dark:text-CellHeader-dark ${
+          dir === "rtl" ? "text-right" : "text-left"
+        }`}
         style={editorStyle}
       />
     </div>

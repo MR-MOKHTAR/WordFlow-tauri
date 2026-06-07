@@ -9,6 +9,19 @@
 
   <body>
     <div id="root"></div>
+    <script>
+      // Apply persisted language direction before React mounts to avoid a flash.
+      (function () {
+        try {
+          var lng = (localStorage.getItem("i18nextLng") || "fa").split("-")[0];
+          var rtl = lng === "fa" || lng === "ar";
+          var root = document.documentElement;
+          root.lang = lng;
+          root.dir = rtl ? "rtl" : "ltr";
+          if (lng === "en") root.classList.add("latin");
+        } catch (e) {}
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

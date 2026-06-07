@@ -3,7 +3,7 @@ import { DeleteFileContext } from "../contexts";
 import useFilesContext from "../FilesContext/useFilesContext";
 import useFileName from "../fileName/useFileName";
 import useToast from "../toast/useToast";
-import deleteFile from "../../../services/tauri/deleteFile";
+import { deleteNote } from "../../../services/db/notesRepo";
 
 type PropsType = {
   children: ReactNode;
@@ -25,7 +25,7 @@ const DeletedFileContext: FC<PropsType> = ({ children }) => {
       const cellIDS = files[file]?.cells?.map((cell) => cell.id) || [];
 
       try {
-        const res = await deleteFile(file);
+        const res = await deleteNote(file);
 
         if (res?.success) {
           // حذف فایل از state
