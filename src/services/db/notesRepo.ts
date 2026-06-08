@@ -85,6 +85,31 @@ export async function deleteNote(
   }
 }
 
+/** Rename a note. Fails if the new name already exists. */
+export async function renameNote(
+  oldName: string,
+  newName: string,
+): Promise<{ success: boolean; error?: string }> {
+  const db = await getDb();
+  const name = newName.trim();
+  if (!name) return { success: false, error: i18n.t("toast.fileCreateError") };
+  if (name === oldName) return { success: true };
+  try {
+    const taken = await getNoteId(db, name);
+    if (taken != null) {
+      return { success: false, error: i18n.t("toast.fileExists") };
+    }
+    await db.execute("UPDATE notes SET name = ?, updated_at = ? WHERE name = ?", [
+      name,
+      Date.now(),
+      oldName,
+    ]);
+    return { success: true };
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : String(err) };
+  }
+}
+
 /** Load the ordered cells of a note. */
 export async function loadCells(
   name: string,

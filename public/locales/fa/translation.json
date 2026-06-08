@@ -111,6 +111,11 @@
     "openOrCreateFile": "لطفاً یک فایل باز کنید یا فایل جدید بسازید!",
     "fileDeleted": "فایل {{name}} با موفقیت حذف شد.",
     "fileExists": "فایلی با این نام وجود دارد!",
-    "fileCreateError": "خطا در ایجاد فایل"
+    "fileCreateError": "خطا در ایجاد فایل",
+    "fileRenamed": "نام فایل به {{name}} تغییر یافت."
+  },
+  "contextMenu": {
+    "rename": "تغییر نام",
+    "delete": "حذف"
   }
 }

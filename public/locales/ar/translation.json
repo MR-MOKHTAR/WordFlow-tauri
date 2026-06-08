@@ -111,6 +111,11 @@
     "openOrCreateFile": "يرجى فتح ملف أو إنشاء ملف جديد!",
     "fileDeleted": "تم حذف الملف {{name}} بنجاح.",
     "fileExists": "يوجد ملف بهذا الاسم بالفعل!",
-    "fileCreateError": "فشل إنشاء الملف"
+    "fileCreateError": "فشل إنشاء الملف",
+    "fileRenamed": "تمت إعادة تسمية الملف إلى {{name}}."
+  },
+  "contextMenu": {
+    "rename": "إعادة تسمية",
+    "delete": "حذف"
   }
 }

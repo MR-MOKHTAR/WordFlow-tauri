@@ -111,6 +111,11 @@
     "openOrCreateFile": "Please open a file or create a new one!",
     "fileDeleted": "File {{name}} deleted successfully.",
     "fileExists": "A file with this name already exists!",
-    "fileCreateError": "Failed to create file"
+    "fileCreateError": "Failed to create file",
+    "fileRenamed": "File renamed to {{name}}."
+  },
+  "contextMenu": {
+    "rename": "Rename",
+    "delete": "Delete"
   }
 }

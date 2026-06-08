@@ -38,6 +38,7 @@ export type FilesContextType = {
     meta: Partial<Pick<FileState, "isDirty" | "hasLoadedOnce">>
   ) => void;
   removeFile: (name: string) => void;
+  renameFile: (oldName: string, newName: string) => void;
   openFileWithFetch: (name: string) => void;
   closeFile: (name: string, saveFile: (fileName: string) => void) => void;
 };

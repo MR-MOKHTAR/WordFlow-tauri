@@ -137,6 +137,22 @@ function FilesProvider({ children }: { children: React.ReactNode }) {
     setActiveFile((prev) => (prev === name ? null : prev));
   }, []);
 
+  const renameFile = useCallback((oldName: string, newName: string) => {
+    if (oldName === newName) return;
+    if (cleanupTimers.current[oldName]) {
+      clearTimeout(cleanupTimers.current[oldName]);
+      delete cleanupTimers.current[oldName];
+    }
+    setFiles((prev) => {
+      const current = prev[oldName];
+      if (!current) return prev;
+      const { [oldName]: _omit, ...rest } = prev;
+      void _omit;
+      return { ...rest, [newName]: { ...current, name: newName } };
+    });
+    setActiveFile((prev) => (prev === oldName ? newName : prev));
+  }, []);
+
   const contextValue = useMemo(
     () => ({
       files,
@@ -148,6 +164,7 @@ function FilesProvider({ children }: { children: React.ReactNode }) {
       updateCells,
       updateFileMeta,
       removeFile,
+      renameFile,
     }),
     [
       files,
@@ -159,6 +176,7 @@ function FilesProvider({ children }: { children: React.ReactNode }) {
       updateCells,
       updateFileMeta,
       removeFile,
+      renameFile,
     ]
   );
 
